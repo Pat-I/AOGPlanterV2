@@ -1,6 +1,6 @@
 🔹 What this is
 
-This is a constructor for the class OfRowCrop.
+This is a existing constructor for the class OfRowCrop.
 
 Constructors run automatically whenever you create a new instance of a class (new OfRowCrop(...)).
 
