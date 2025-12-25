@@ -34,6 +34,7 @@ namespace AOGPlanterV2
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_First));
             label6 = new Label();
             label5 = new Label();
             label3 = new Label();
@@ -109,7 +110,8 @@ namespace AOGPlanterV2
             label12.Name = "label12";
             label12.Size = new Size(662, 57);
             label12.TabIndex = 29;
-            label12.Text = "You must make sure that they receive or can get the source code.  And you must show them these terms so they know their rights.  Don't steal others work and call it your own.";
+            label12.Text = resources.GetString("label12.Text");
+            label12.Click += label12_Click;
             // 
             // lblVersion
             // 
@@ -173,7 +175,7 @@ namespace AOGPlanterV2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Microsoft Sans Serif", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(191, 335);
+            label2.Location = new Point(191, 354);
             label2.Name = "label2";
             label2.Size = new Size(260, 24);
             label2.TabIndex = 130;
@@ -183,7 +185,7 @@ namespace AOGPlanterV2
             // label7
             // 
             label7.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label7.Location = new Point(191, 173);
+            label7.Location = new Point(191, 201);
             label7.Margin = new Padding(4, 0, 4, 0);
             label7.Name = "label7";
             label7.Size = new Size(662, 57);
@@ -193,22 +195,24 @@ namespace AOGPlanterV2
             // label4
             // 
             label4.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(191, 221);
+            label4.Location = new Point(191, 258);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
-            label4.Size = new Size(662, 57);
+            label4.Size = new Size(662, 48);
             label4.TabIndex = 133;
             label4.Text = "It is in no way to be used on real equipment in any circumstances.  A simulator is provided to allow the student to safely experience machine monitoring.";
+            label4.Click += label4_Click;
             // 
             // label8
             // 
             label8.Font = new Font("Microsoft Sans Serif", 9.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label8.Location = new Point(191, 278);
+            label8.Location = new Point(191, 306);
             label8.Margin = new Padding(4, 0, 4, 0);
             label8.Name = "label8";
-            label8.Size = new Size(662, 57);
+            label8.Size = new Size(662, 37);
             label8.TabIndex = 134;
             label8.Text = "There are no safety systems in the software and none are implied.";
+            label8.Click += label8_Click;
             // 
             // btn_disagree
             // 

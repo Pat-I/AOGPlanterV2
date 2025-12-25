@@ -117,4 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label12.Text" xml:space="preserve">
+    <value>You must make sure that they receive or can get the source code.  And you must show them these terms so they know their rights.  Don't steal others work and call it your own, just as a significant part of this app was derived from AgOpenGPS.</value>
+  </data>
 </root>
