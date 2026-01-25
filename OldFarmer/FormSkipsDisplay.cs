@@ -176,6 +176,9 @@ namespace AOGPlanterV2
                 if (mf.rc.rcArraySkips[i] > 0)
                     color = Color.Yellow; // overlays purple
 
+                if (mf.rc.rcArraySkips[i] == 7)
+                    color = Color.Red; // overlays yellow
+
                 colorBuffer[0, i] = color;
             }
         }

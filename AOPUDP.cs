@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
+using System.Media; 
 
 namespace AOGPlanterV2
 {
@@ -446,7 +447,7 @@ namespace AOGPlanterV2
         /// </summary>
         public CPGN_E6 rcData = new CPGN_E6();
         /// <summary>
-        /// rowCropData PGN - 230 - E6
+        /// rowCropData PGN - 229 - E5
         /// </summary>
         public CPGN_E5 p_229 = new CPGN_E5();
 
@@ -618,7 +619,11 @@ namespace AOGPlanterV2
                                         //	if (data[i] < 0) data[i] = 250;  // occurs with overflow situation
                                         mf.rc.rcPopulation[popIndex] = data[i] * 1000f;
                                         mf.rc.rcPopulationPercent[popIndex] = (data[i] * 100000f / Properties.Settings.Default.setPlanterTargetPopulation) - 100f;
-                                        if (mf.rc.rcPopulationPercent[popIndex] < -15f) mf.rc.rcPopulationPercent[popIndex] = -15f;
+                                        if (mf.rc.rcPopulationPercent[popIndex] < -15f)
+                                        {
+                                            mf.rc.rcPopulationPercent[popIndex] = -15f;
+                                            if (Properties.Settings.Default.setPlanterAlarm_Active) mf.sounds.sndDisconnected.Play(); 
+                                        }
                                         if (mf.rc.rcPopulationPercent[popIndex] > 115f) mf.rc.rcPopulationPercent[popIndex] = 115f;
                                     }
                                     break;

@@ -3,6 +3,7 @@ using AOGPlanterV2.OldFarmer;
 using System.Net;
 using System.Net.Sockets;
 using System.Timers;
+using System.Media;
 
 namespace AOGPlanterV2
 {
@@ -34,6 +35,11 @@ namespace AOGPlanterV2
         /// Sound
         /// </summary>
         public CSound sounds;
+
+        /// <summary>
+        /// Sound for planter control box disconnected
+        /// </summary>
+        public SoundPlayer sndDisconnected;
 
         public AOPUDP udp;
         public FormSkipsChart skp;
