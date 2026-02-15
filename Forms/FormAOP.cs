@@ -275,7 +275,7 @@ namespace AOGPlanterV2
             formF.Focus();
 
             udp = new AOPUDP(this);  // create instance
-            udp.StartHelloLoop("192.168.1.192", 9998);
+            udp.StartHelloLoop("192.168.5.255", 8888);
             udp.StartUDPServer();
         }
 

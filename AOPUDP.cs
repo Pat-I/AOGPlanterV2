@@ -10,7 +10,7 @@ namespace AOGPlanterV2
     {
         public static UdpClient udpServer;
         private static Thread listenThread;
-        private static int port = 9998; // Port to listen on
+        private static int port = 9999; // Port to listen on
         private static AOPUDP udp;
         private float summaryPopulation = 32000.0f;
         private float summarySingulation = 96.7f;
@@ -836,7 +836,7 @@ namespace AOGPlanterV2
         public void SendPgnToLoop(byte[] byteData)
         {
             //UdpClient client = new UdpClient();
-            udpServer.Send(byteData, byteData.Length, "192.168.1.192", 9998);
+            udpServer.Send(byteData, byteData.Length, "192.168.5.255", 8888);
         }
         public void StartHelloLoop(string targetIp, int targetPort)
         {
@@ -848,7 +848,7 @@ namespace AOGPlanterV2
 
                     while (true)
                     {
-                        udp.Send(data, data.Length, "192.168.1.192", 9998);
+                        udp.Send(data, data.Length, "192.168.5.255", 8888);
                         Thread.Sleep(1000); // once per second
                     }
                 }
