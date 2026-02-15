@@ -1,7 +1,5 @@
 ﻿using AOGPlanterV2.OF;
 using AOGPlanterV2.OldFarmer;
-using System.Net;
-using System.Net.Sockets;
 using System.Timers;
 using System.Media;
 
@@ -275,7 +273,6 @@ namespace AOGPlanterV2
             formF.Focus();
 
             udp = new AOPUDP(this);  // create instance
-            udp.StartHelloLoop("192.168.5.255", 8888);
             udp.StartUDPServer();
         }
 
@@ -283,7 +280,7 @@ namespace AOGPlanterV2
         {
 
             Form formA = new FormArduinoSettings(this);
-            formA.Show(this);
+            formA.ShowDialog(this);
         }
 
         private void CancelClick(object sender, EventArgs e)

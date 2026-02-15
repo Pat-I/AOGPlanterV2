@@ -1,24 +1,20 @@
 ﻿
 using System.Net;
 using System.Net.Sockets;
-using System.Text;
-using System.Media; 
+using System.Text; 
 
 namespace AOGPlanterV2
 {
     public class AOPUDP
     {
         public static UdpClient udpServer;
-        private static Thread listenThread;
-        private static int port = 9999; // Port to listen on
+        private static int port = 15555; // Port to listen on
         private static AOPUDP udp;
         private float summaryPopulation = 32000.0f;
         private float summarySingulation = 96.7f;
         private float summaryDoublePercent = 1.1f;
         private float summarySkipPercent = 2.2f;
-        private byte[] myByteData = {0x00};
 
-       
 
         private FormAOP mf;
         //        private OfRowCrop rc;  
@@ -477,22 +473,18 @@ namespace AOGPlanterV2
 
         public void StartUDPServer()
         {
-         /*    //This area used foe tresting
-          if (mf.InvokeRequired)
-          {
-              _ = mf.Invoke((MethodInvoker)(() => mf.txtPopulation.Text = "1234"));
-
-          }
-          else
-          {
-              mf.txtPopulation.Text = "5678 from UDP"; // this is displayed
-              udp.mf.rc.rcSkips[2] = 3;
-          }
-          */
-            udpServer = new UdpClient(port);
-            listenThread = new Thread(new ThreadStart(ListenForMessages));
-            listenThread.Start();
-
+            new Thread(() =>
+            {
+                using (udpServer = new UdpClient(port))
+                {
+                    while (true)
+                    {
+                        ListenForMessages();
+                    }
+                }
+            })
+            { IsBackground = true }.Start();
+ 
             //        udpServer.Close(); // where would I put this?
         }
         public static int msgCount = 0;
@@ -500,9 +492,9 @@ namespace AOGPlanterV2
         private void ListenForMessages()
         {
             //udp.mf.rc.rcSkips[4] = 5;  // for testing.  This works
-            while (true)
-            {
-                msgCount += 1;
+            //while (true)
+            //{
+               // msgCount += 1;
                //                 UpdateLabel("XOXO");  // this test works
                //                 udp.mf.rc.rcSkips[3] = 4;
                 
@@ -510,7 +502,7 @@ namespace AOGPlanterV2
                 try
                 {
                     // Listen for UDP packets on the given port
-                    IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, 0);
+                    IPEndPoint endPoint = new IPEndPoint(IPAddress.Loopback, 0);
                     byte[] data = udpServer.Receive(ref endPoint);
                     string receivedData = Encoding.UTF8.GetString(data);
                     msgCount += 1;
@@ -830,32 +822,14 @@ namespace AOGPlanterV2
                 {
                     //                    Console.WriteLine($"Error receiving message: {ex.Message}");
                 }
-            }
+            //}
         }
         //    }
         public void SendPgnToLoop(byte[] byteData)
         {
             //UdpClient client = new UdpClient();
-            udpServer.Send(byteData, byteData.Length, "192.168.5.255", 8888);
-        }
-        public void StartHelloLoop(string targetIp, int targetPort)
-        {
-            new Thread(() =>
-            {
-                using (UdpClient udp = new UdpClient())
-                {
-                    byte[] data = Encoding.ASCII.GetBytes("hello");
-
-                    while (true)
-                    {
-                        udp.Send(data, data.Length, "192.168.5.255", 8888);
-                        Thread.Sleep(1000); // once per second
-                    }
-                }
-            })
-            { IsBackground = true }.Start();
-        }
-
+            udpServer.Send(byteData, byteData.Length, "127.255.255.255", 17777);
+        }       
     }
 }
 
