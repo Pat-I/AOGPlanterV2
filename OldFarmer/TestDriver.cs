@@ -21,7 +21,7 @@ namespace AOGPlanterV2
 
         #region Ticker
         //		const int SecondsToUpdate = 1;
-        const int SecondsForGraphUpdate = 3;
+        const int SecondsForGraphUpdate = 2;
         public void UpdateRc(FormAOP mf)
         {
             var now = DateTimeOffset.UtcNow;
@@ -113,6 +113,7 @@ namespace AOGPlanterV2
                 mf.rc.rcArraySkips[0] = 0;
                 mf.rc.rcArraySkips[3] = 3;
                 mf.rc.rcArraySkips[6] = 1;
+                mf.rc.rcArraySkips[7] = 0;
                 mf.rc.rcArraySkips[8] = 6;
                 mf.rc.rcArrayDoubles[6] = 4;
                 mf.rc.rcArrayDoubles[13] = 2;
@@ -138,6 +139,7 @@ namespace AOGPlanterV2
                 mf.rc.rcArraySkips[0] = 1;
                 mf.rc.rcArraySkips[3] = 0;
                 mf.rc.rcArraySkips[6] = 0;
+                mf.rc.rcArraySkips[7] = 7;
                 mf.rc.rcArraySkips[8] = 3;
                 mf.rc.rcArrayDoubles[6] = 2;
                 mf.rc.rcArrayDoubles[13] = 0;
