@@ -33,7 +33,7 @@ namespace AOGPlanterV2
 
 
         //how many individual sections
-        public float numOfSections;
+        public int numOfSections;
 
         public int numSuperSection;
 

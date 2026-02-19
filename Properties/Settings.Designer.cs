@@ -1504,9 +1504,9 @@ namespace AOGPlanterV2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("16")]
-        public float setVehicle_numSections {
+        public int setVehicle_numSections {
             get {
-                return ((float)(this["setVehicle_numSections"]));
+                return ((int)(this["setVehicle_numSections"]));
             }
             set {
                 this["setVehicle_numSections"] = value;
@@ -1516,9 +1516,9 @@ namespace AOGPlanterV2.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("9")]
-        public float setPlanterNumRows {
+        public int setPlanterNumRows {
             get {
-                return ((float)(this["setPlanterNumRows"]));
+                return ((int)(this["setPlanterNumRows"]));
             }
             set {
                 this["setPlanterNumRows"] = value;

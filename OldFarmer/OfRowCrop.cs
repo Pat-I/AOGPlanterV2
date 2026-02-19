@@ -1,10 +1,12 @@
+using static System.Collections.Specialized.BitVector32;
+
 namespace AOGPlanterV2.OF
 {
     public class OfRowCrop
     {
         #region Constructor and Vars
+        public const string NotConnected = "nc";
         public const string Normal = "normal";
-
         private FormAOP mf { get; }
         //		private Dictionary<string, vec3> conditionLookup { get; set; }
         private Dictionary<int, SectionState> sectionState { get; set; }
@@ -15,7 +17,7 @@ namespace AOGPlanterV2.OF
             //			InitSectionState();
         }
         //where in the pgn is data
-        public int[] rcRowStatus = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public int[] rcRowStatus = { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }; // 0 = normal, 1 = out, 2 = skip, 3 = double 4 = nc
         public int[] rcSkips = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public int[] rcDoubles = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public int[] rcArraySkips = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -52,12 +54,12 @@ namespace AOGPlanterV2.OF
             public string GetState() { changed = false; return GetCurrentState(); }
             public bool HasStateChanged() { return changed; }
         }
-        private void InitSectionState()
+        public void InitSectionState()
         {
             sectionState = new Dictionary<int, SectionState>();
 
             for (int j = 0; j < mf.tool.numOfSections + 1; j++)
-                sectionState.Add(j, new SectionState() { state = Normal, changed = true });
+                sectionState.Add(j, new SectionState() { state = NotConnected, changed = true });
         }
 
         private void InitSkip()
@@ -108,12 +110,31 @@ namespace AOGPlanterV2.OF
         //		return new vec3(mf.tool.secColors[section].R, mf.tool.secColors[section].G, mf.tool.secColors[section].B);
         //}
 
-        public void SetStateSkip(int section) { if (sectionState.ContainsKey(section)) sectionState[section].ChangeState("skip"); }
-        public void SetStateDouble(int section) { sectionState[section].ChangeState("double"); }
-        public void SetStateOut(int section) { sectionState[section].ChangeState("out"); }
-        public void SetStateNormal(int section) { sectionState[section].ChangeState(Normal); }
-        public bool HasStateChanged(int section) { return sectionState[section].HasStateChanged(); }
-        public string GetCurrentState(int section) { return sectionState.ContainsKey(section) ? sectionState[section].GetCurrentState() : Normal; }
+        public void SetStateSkip(int section)
+        {
+            //if (sectionState.ContainsKey(section)) sectionState[section].ChangeState("skip");
+            sectionState[section].ChangeState("skip");
+        }
+        public void SetStateDouble(int section)
+        {
+            sectionState[section].ChangeState("double");
+        }
+        public void SetStateOut(int section)
+        {
+            sectionState[section].ChangeState("out");
+        }
+        public void SetStateNormal(int section)
+        {
+            sectionState[section].ChangeState(Normal);
+        }
+        public bool HasStateChanged(int section)
+        {
+            return sectionState[section].HasStateChanged();
+        }
+        public string GetCurrentState(int section)
+        {
+            return sectionState[section].GetCurrentState();
+        }
         #endregion
     }
 }

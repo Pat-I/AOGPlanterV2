@@ -62,8 +62,9 @@ namespace AOGPlanterV2
             sounds = new CSound();
 
             timer1 = new System.Windows.Forms.Timer();
-            timer1.Interval = 1000; // 1000 ms = 1 second
-            timer1.Tick += Timer1_Tick; // attach event handler
+            timer1.Interval = 100; // 1000 ms = 1 second
+            //timer1.Tick += Timer1_Tick; // attach event handler
+            timer1.Tick += new System.EventHandler(Timer1_Tick);
             timer1.Start(); // start the timer
 
             //timerSim = new System.Windows.Forms.Timer();
@@ -72,6 +73,7 @@ namespace AOGPlanterV2
             //timerSim.Start(); // start the timer
 
             SetupTimer();
+            rc.InitSectionState();
         }
 
         //Current directory of Tools
@@ -232,7 +234,7 @@ namespace AOGPlanterV2
                 Form formH = new FormSkipsChart(this);
                 formH.Show(this);
             }
-           if (fch != null)
+            if (fch != null)
             {
                 fch.Focus();
 //                return;
@@ -370,10 +372,6 @@ namespace AOGPlanterV2
             //});
         }
 
-        private void timer1_Tick_1(object sender, EventArgs e)
-        {
-
-        }
         private void ShowSkipsDisplay()
         {
             if (skipsDisplay == null || skipsDisplay.IsDisposed)

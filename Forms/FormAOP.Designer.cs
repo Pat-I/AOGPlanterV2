@@ -199,9 +199,6 @@
             btn_disagree.UseVisualStyleBackColor = true;
             btn_disagree.Click += CancelClick;
             // 
-            // timer1
-            // 
-            timer1.Tick += timer1_Tick_1;
             // 
             // txtUpTime
             // 

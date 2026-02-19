@@ -371,10 +371,10 @@
     <Setting Name="planterName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="setVehicle_numSections" Type="System.Single" Scope="User">
+    <Setting Name="setVehicle_numSections" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">16</Value>
     </Setting>
-    <Setting Name="setPlanterNumRows" Type="System.Single" Scope="User">
+    <Setting Name="setPlanterNumRows" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">9</Value>
     </Setting>
     <Setting Name="setPlanterArraySpeed" Type="System.Int32" Scope="User">
