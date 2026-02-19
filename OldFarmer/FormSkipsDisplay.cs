@@ -176,8 +176,11 @@ namespace AOGPlanterV2
                 if (mf.rc.rcArraySkips[i] > 0)
                     color = Color.Yellow; // overlays purple
 
-                if (mf.rc.rcArraySkips[i] == 7)
+                if (mf.rc.rcArraySkips[i] == 7) {
                     color = Color.Red; // overlays yellow
+                    if (Properties.Settings.Default.setPlanterAlarm_Active && (Properties.Settings.Default.setPlanter_Active = true)) mf.sounds.sndDisconnected.Play();
+                }
+
 
                 colorBuffer[0, i] = color;
             }

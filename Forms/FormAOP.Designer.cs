@@ -185,7 +185,6 @@
             btnSetUp.Name = "btnSetUp";
             btnSetUp.Size = new Size(85, 66);
             btnSetUp.TabIndex = 9;
-            btnSetUp.Text = "button1";
             btnSetUp.UseVisualStyleBackColor = true;
             btnSetUp.Click += clickSetup;
             // 

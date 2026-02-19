@@ -315,9 +315,9 @@ namespace AOGPlanterV2.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.IO.UnmanagedMemoryStream similar to System.IO.MemoryStream.
         /// </summary>
-        //internal static System.IO.UnmanagedMemoryStream beepbeep {
+        //internal static System.IO.UnmanagedMemoryStream mybeepbeep {
         //    get {
-        //        return ResourceManager.GetStream("beepbeep", resourceCulture);
+        //        return ResourceManager.GetStream("mybeepbeep", resourceCulture);
         //    }
         //}
         
