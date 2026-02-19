@@ -522,7 +522,7 @@ namespace AOGPlanterV2
 
                             if (data[Length] != (byte)CK_A)
                             {
-                                return;
+                                //return;
                             }
                         }
                         else
@@ -669,121 +669,80 @@ namespace AOGPlanterV2
                                     break;
                                 }
                             ////// Row crop status by row -- sets color ////
-                            //case 230:   // test by Jim to catch row sensor state 16 rows stored in data[5] and data[6]
-                            //    {
+                            case 230:   // test by Jim to catch row sensor state 16 rows stored in data[5] and data[6]
+                                {
 
 
-                            //        int jptest = 0;
-                            //        int numToTest = 4;
-                            //        if (tool.numOfSections < 4) numToTest = tool.numOfSections;
-                            //        for (int i = 0; i < numToTest; i++)
-                            //        {
-                            //            jptest = data[5];
-                            //            jptest = (byte)data[5] & 0b000011;
-                            //            if (jptest == 0)
-                            //            {
-                            //                udp.mf.rc.SetStateNormal(i);
-                            //            }
-                            //            else if (jptest == 1)
-                            //            {
-                            //                udp.mf.rc.SetStateOut(i);
-                            //                if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
-                            //            }
-                            //            else if (jptest == 2)
-                            //            {
-                            //                udp.mf.rc.SetStateSkip(i);
-                            //            }
-                            //            else if (jptest == 3)
-                            //            {
-                            //                udp.mf.rc.SetStateDouble(i);
-                            //            }
+                                    int jptest = 0;
+                                    int numToTest = 4;
+                                    if (mf.tool.numOfSections < 4) numToTest = mf.tool.numOfSections;
+                                    jptest = (byte)data[5];
 
-                            //            data[5] = ((byte)(data[5] >> 2));
-                            //        }
+                                    for (int i = 0; i < numToTest; i++)
+                                    {
+                                        mf.rc.rcRowStatus[i] = jptest & 0b000011;
 
-                            //        numToTest = 8;
-                            //        if (tool.numOfSections < 8) numToTest = tool.numOfSections;
-                            //        for (int i = 4; i < numToTest; i++)
-                            //        {
-                            //            jptest = data[6] & 0b000011;
-                            //            if (jptest == 0)
-                            //            {
-                            //                udp.mf.rc.SetStateNormal(i);
-                            //            }
-                            //            else if (jptest == 1)
-                            //            {
-                            //                udp.mf.rc.SetStateOut(i);
-                            //                if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
-                            //            }
-                            //            else if (jptest == 2)
-                            //            {
-                            //                udp.mf.rc.SetStateSkip(i);
-                            //            }
-                            //            else if (jptest == 3)
-                            //            {
-                            //                udp.mf.rc.SetStateDouble(i);
-                            //            }
+                                        if (jptest == 1)
+                                        {
+                                            //if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                        }
 
-                            //            data[6] = ((byte)(data[6] >> 2));
-                            //        }
+                                        jptest = (jptest >> 2);
+                                    }
 
-                            //        numToTest = 12;
-                            //        if (tool.numOfSections < 12) numToTest = tool.numOfSections;
-                            //        for (int i = 8; i < numToTest; i++)
-                            //        {
-                            //            jptest = data[7] & 0b000011;
-                            //            if (jptest == 0)
-                            //            {
-                            //                udp.mf.rc.SetStateNormal(i);
-                            //            }
-                            //            else if (jptest == 1)
-                            //            {
-                            //                udp.mf.rc.SetStateOut(i);
-                            //                if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
-                            //            }
-                            //            else if (jptest == 2)
-                            //            {
-                            //                udp.mf.rc.SetStateSkip(i);
-                            //            }
-                            //            else if (jptest == 3)
-                            //            {
-                            //                udp.mf.rc.SetStateDouble(i);
-                            //            }
+                                    numToTest = 8;
+                                    if (mf.tool.numOfSections < 8) numToTest = mf.tool.numOfSections;
+                                    for (int i = 4; i < numToTest; i++)
+                                    {
+                                        jptest = data[6] & 0b000011;
 
-                            //            data[7] = ((byte)(data[7] >> 2));
-                            //        }
+                                        mf.rc.rcRowStatus[i] = jptest;
 
-                            //        numToTest = 16;
-                            //        if (tool.numOfSections < 16) numToTest = tool.numOfSections;
-                            //        for (int i = 12; i < numToTest; i++)
-                            //        {
-                            //            jptest = data[8] & 0b000011;
-                            //            if (jptest == 0)
-                            //            {
-                            //                udp.mf.rc.SetStateNormal(i);
-                            //            }
-                            //            else if (jptest == 1)
-                            //            {
-                            //                udp.mf.rc.SetStateOut(i);
-                            //                if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
-                            //            }
-                            //            else if (jptest == 2)
-                            //            {
-                            //                udp.mf.rc.SetStateSkip(i);
-                            //            }
-                            //            else if (jptest == 3)
-                            //            {
-                            //                udp.mf.rc.SetStateDouble(i);
-                            //            }
+                                       if (jptest == 1)
+                                       {
+                                            //if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                       }
 
-                            //            data[8] = ((byte)(data[8] >> 2));
-                            //        }
+                                        data[6] = ((byte)(data[6] >> 2));
+                                    }
 
-                            //        udp.mf.rc.fbFeedbackCounter = (int)data[9];
+                                    numToTest = 12;
+                                    if (mf.tool.numOfSections < 12) numToTest = mf.tool.numOfSections;
+                                    for (int i = 8; i < numToTest; i++)
+                                    {
+                                        jptest = data[7] & 0b000011;
 
-                            //        break;
+                                        mf.rc.rcRowStatus[i] = jptest;
 
-                            //    }
+                                        if (jptest == 1)
+                                        {
+                                            //if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                        }
+
+                                        data[7] = ((byte)(data[7] >> 2));
+                                    }
+
+                                    numToTest = 16;
+                                    if (mf.tool.numOfSections < 16) numToTest = mf.tool.numOfSections;
+                                    for (int i = 12; i < numToTest; i++)
+                                    {
+                                        jptest = data[8] & 0b000011;
+
+                                        mf.rc.rcRowStatus[i] = jptest;
+
+                                        if (jptest == 1)
+                                        {
+                                            //if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                        }
+
+                                        data[8] = ((byte)(data[8] >> 2));
+                                    }
+
+                                    mf.rc.fbFeedbackCounter = (int)data[9];
+
+                                    break;
+
+                                }
                             //// Doubles array by row ////
                             case 232:
                                 {

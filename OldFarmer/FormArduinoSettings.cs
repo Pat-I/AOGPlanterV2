@@ -439,7 +439,7 @@ namespace AOGPlanterV2.OldFarmer
                 // Always return focus to numericUpDown1
                 //  NumericKeypad.Focus();
                 //     numRows.Value = (decimal)numberOfRows;
-                Properties.Settings.Default.setPlanterNumRows = (float)numRows.Value;
+                Properties.Settings.Default.setPlanterNumRows = (int)numRows.Value;
                 Properties.Settings.Default.Save();
                 btnSavePlanterSettings.Focus();
             }
@@ -447,7 +447,7 @@ namespace AOGPlanterV2.OldFarmer
 
         private void NumRows_Changed(object sender, EventArgs e)
         {
-            AOGPlanterV2.Properties.Settings.Default.setPlanterNumRows = (float)numRows.Value;
+            AOGPlanterV2.Properties.Settings.Default.setPlanterNumRows = (int)numRows.Value;
             Properties.Settings.Default.Save();
             btnSavePlanterSettings.Focus();
         }

@@ -3,6 +3,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using static AOGPlanterV2.OF.OfRowCrop;
 
 namespace AOGPlanterV2
 {
@@ -34,7 +35,7 @@ namespace AOGPlanterV2
             // Initialize everything green
             for (int r = 0; r < HistoryRows; r++)
                 for (int c = 0; c < numOfSections; c++)
-                    colorBuffer[r, c] = Color.Green;
+                    colorBuffer[r, c] = Color.Gray;
 
             DoubleBuffered = true;
             FormBorderStyle = FormBorderStyle.None;
@@ -166,18 +167,25 @@ namespace AOGPlanterV2
         }
         private void UpdateTopRowFromLiveData()
         {
+
             for (int i = 0; i < numOfSections; i++)
             {
-                Color color = Color.Green;
+                Color color = Color.Gray;
 
-                if (mf.rc.rcArrayDoubles[i] > 0)
+                if (mf.rc.rcRowStatus[i] == 1) //normal
+                    color = Color.Green;
+
+                if (mf.rc.rcRowStatus[i] == 3) //skip
                     color = Color.Purple;
 
-                if (mf.rc.rcArraySkips[i] > 0)
+                if (mf.rc.rcRowStatus[i] == 2)
                     color = Color.Yellow; // overlays purple
 
-                if (mf.rc.rcArraySkips[i] == 7)
+                if (mf.rc.rcRowStatus[i] == 1)
                     color = Color.Red; // overlays yellow
+
+                if (mf.rc.rcRowStatus[i] == 4)
+                    color = Color.Black;
 
                 colorBuffer[0, i] = color;
             }
