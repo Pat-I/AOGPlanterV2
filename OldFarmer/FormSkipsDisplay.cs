@@ -170,18 +170,18 @@ namespace AOGPlanterV2
 
             for (int i = 0; i < numOfSections; i++)
             {
-                Color color = Color.Gray;
+                Color color = Color.Black; //5 or higher
 
-                if (mf.rc.rcRowStatus[i] == 1) //normal
+                if (mf.rc.rcRowStatus[i] == 0) //normal
                     color = Color.Green;
 
                 if (mf.rc.rcRowStatus[i] == 3) //skip
                     color = Color.Purple;
 
-                if (mf.rc.rcRowStatus[i] == 2)
+                if (mf.rc.rcRowStatus[i] == 2) //double
                     color = Color.Yellow; // overlays purple
 
-                if (mf.rc.rcRowStatus[i] == 1)
+                if (mf.rc.rcRowStatus[i] == 1) // problem
                 {
                     color = Color.Red; // overlays yellow
                     if (Properties.Settings.Default.setPlanterAlarm_Active && (Properties.Settings.Default.setPlanter_Active = true)) mf.sounds.sndDisconnected.Play();
@@ -189,7 +189,7 @@ namespace AOGPlanterV2
 
 
                 if (mf.rc.rcRowStatus[i] == 4)
-                    color = Color.Black;
+                    color = Color.Gray;
 
                 colorBuffer[0, i] = color;
             }

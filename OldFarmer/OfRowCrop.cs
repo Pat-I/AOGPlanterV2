@@ -17,7 +17,7 @@ namespace AOGPlanterV2.OF
             //			InitSectionState();
         }
         //where in the pgn is data
-        public int[] rcRowStatus = { 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4 }; // 0 = normal, 1 = out, 2 = skip, 3 = double 4 = nc
+        public int[] rcRowStatus = { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 }; // 0 = normal, 1 = out, 2 = skip, 3 = double 4 = nc
         public int[] rcSkips = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public int[] rcDoubles = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public int[] rcArraySkips = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -34,7 +34,7 @@ namespace AOGPlanterV2.OF
         public float sumSkipPercent = 1.3f;
         public float sumDoublePercent = .2f;
         public float sumSingulation = 98.5f;
-        public float sumPopulation = 32000;
+        public float sumPopulation = 32000f;
         public DateTime timePrev;
         public DateTime timeDataReceived;
         internal class SectionState

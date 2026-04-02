@@ -531,9 +531,52 @@ namespace AOGPlanterV2
                         }
                         switch (data[3])
                         {
-                            //// Feedback from Arduino Planter Monitor
+                        //// Population by row by spacing//// USED by Pat's INO
+                        case 202:
+                            {
+                                int popIndex = 7;
+                                for (int i = 5; i < 13; i++)
+                                {
+                                    popIndex += 1;
+                                    //	if (data[i] < 0) data[i] = 250;  // occurs with overflow situation
+                                    //	rc.rcPopulationPercent[popIndex] = (data[i] * 100000f / (float.Parse(Properties.Settings.Default.setPlanterTargetPopulation))) - 100f;
+                                    //mf.rc.rcPopulation[popIndex] = data[i] * 1000f;
+                                    if (data[i] > 0 && mf.rc.fbRowWidth > 0.1f)
+                                        mf.rc.rcPopulation[popIndex] = 1000000000f / (data[i] * mf.rc.fbRowWidth); // row width in cm
+                                    else mf.rc.rcPopulation[popIndex] = 0f;
 
-                            case 224:
+                                        mf.rc.rcPopulationPercent[popIndex] = (mf.rc.rcPopulation[popIndex] * 100f / Properties.Settings.Default.setPlanterTargetPopulation) - 100f;
+                                    if (mf.rc.rcPopulationPercent[popIndex] < -15f) mf.rc.rcPopulationPercent[popIndex] = -15f;
+                                    if (mf.rc.rcPopulationPercent[popIndex] > 15f) mf.rc.rcPopulationPercent[popIndex] = 15f;
+
+                                }
+                                break;
+                            }
+                        //// Population by row by spacing//// USED by Pat's INO
+                        case 203:
+                            {
+                                int popIndex = -1;
+                                for (int i = 5; i < 13; i++)
+                                {
+                                    popIndex += 1;
+                                    //	if (data[i] < 0) data[i] = 250;  // occurs with overflow situation
+                                    //mf.rc.rcPopulation[popIndex] = data[i] * 1000f;
+                                    if (data[i] > 0 && mf.rc.fbRowWidth > 0.1f)
+                                        mf.rc.rcPopulation[popIndex] = 1000000000f / (data[i] * mf.rc.fbRowWidth); // row width in cm
+                                    else mf.rc.rcPopulation[popIndex] = 0f;
+                                    mf.rc.rcPopulationPercent[popIndex] = (mf.rc.rcPopulation[popIndex] * 100f / Properties.Settings.Default.setPlanterTargetPopulation) - 100f;
+                                    if (mf.rc.rcPopulationPercent[popIndex] < -15f)
+                                    {
+                                        mf.rc.rcPopulationPercent[popIndex] = -15f;
+                                        //if (Properties.Settings.Default.setPlanterAlarm_Active) mf.sounds.sndDisconnected.Play();
+                                    }
+                                    if (mf.rc.rcPopulationPercent[popIndex] > 15f) mf.rc.rcPopulationPercent[popIndex] = 15f;
+                                }
+                                break;
+                            }
+                        //// Feedback from Arduino Planter Monitor
+
+                        case 224:
                                 {
                                     mf.rc.fbNumSections = (int)data[5];
                                     mf.rc.fbTargetSpeed = (float)data[6] / 10.0f;
@@ -574,15 +617,15 @@ namespace AOGPlanterV2
                                         {
                                             p_224.pgn[p_224.isMetric] = unchecked((byte)(int)0);
                                         }
-
+                                        p_224.MakeCRC();
                                         SendPgnToLoop(p_224.pgn);
 
                                         //     TimedMessageBox(2000, gStr.gsAutoSteerPort, "Settings Sent To Planter Monitor Module");
                                     } // end case
                                     break;
                                 }
-
-                            //// Population by row ////
+                            
+                            //// Population by row //// USED by Outfarming INO
                             case 225:
                                 {
                                     int popIndex = 7;
@@ -599,9 +642,7 @@ namespace AOGPlanterV2
                                     }
                                     break;
                                 }
-
-
-                            //// Population by row ////
+                            //// Population by row //// USED by Outfarming INO
                             case 226:
                                 {
                                     int popIndex = -1;
@@ -653,13 +694,13 @@ namespace AOGPlanterV2
                             //// Row crop summary ////
                             case 229:
                                 {
-                                    summaryPopulation = (Int16)((data[6] << 8) + data[5]);
+                                    summaryPopulation = (UInt16)((data[6] << 8) + data[5]);
                                     summaryPopulation *= 10;
-                                    summarySingulation = (Int16)((data[12] << 8) + data[11]);
+                                    summarySingulation = (UInt16)((data[12] << 8) + data[11]);
                                     summarySingulation = summarySingulation / 10;
-                                    summarySkipPercent = (Int16)((data[8] << 8) + data[7]);
+                                    summarySkipPercent = (UInt16)((data[8] << 8) + data[7]);
                                     summarySkipPercent = summarySkipPercent / 10;
-                                    summaryDoublePercent = (Int16)((data[10] << 8) + data[9]);
+                                    summaryDoublePercent = (UInt16)((data[10] << 8) + data[9]);
                                     summaryDoublePercent = summaryDoublePercent / 10;
                                     mf.rc.sumSkipPercent = summarySkipPercent;
                                     mf.rc.sumDoublePercent = summaryDoublePercent;
@@ -668,82 +709,42 @@ namespace AOGPlanterV2
                                     mf.rc.timeDataReceived = DateTime.Now;
                                     break;
                                 }
-                            ////// Row crop status by row -- sets color ////
+                            ////// Row crop status by row -- sets color
                             case 230:   // test by Jim to catch row sensor state 16 rows stored in data[5] and data[6]
                                 {
+                                for (int i = 0; i < mf.tool.numOfSections; i++)
+                                {
+                                    // 1. Get the 2-bit status (from bytes 5, 6, 7, 8)
+                                    int statusByteIndex = 5 + (i / 4);
+                                    int statusShift = (i % 4) * 2;
+                                    int status = (data[statusByteIndex] >> statusShift) & 0b11;
 
+                                    // 2. Get the override bit (from bytes 10, 11)
+                                    // Row 0-7 -> byte 10, Row 8-15 -> byte 11
+                                    int overrideByteIndex = 10 + (i / 8);
+                                    int overrideBit = (data[overrideByteIndex] >> (i % 8)) & 0b1;
 
-                                    int jptest = 0;
-                                    int numToTest = 4;
-                                    if (mf.tool.numOfSections < 4) numToTest = mf.tool.numOfSections;
-                                    jptest = (byte)data[5];
-
-                                    for (int i = 0; i < numToTest; i++)
+                                    // 3. Apply the logic: if bit is 1(off), status is 4(gray)
+                                    if (overrideBit == 1)
                                     {
-                                        mf.rc.rcRowStatus[i] = jptest & 0b000011;
-
-                                        if (jptest == 1)
-                                        {
-                                            //if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
-                                        }
-
-                                        jptest = (jptest >> 2);
+                                        status = 4;
                                     }
+                                    //else if (status == 1)
+                                    //{
+                                        // Only play alarm if the bit was 1 AND status is 1
+                                        // if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                    //}
 
-                                    numToTest = 8;
-                                    if (mf.tool.numOfSections < 8) numToTest = mf.tool.numOfSections;
-                                    for (int i = 4; i < numToTest; i++)
-                                    {
-                                        jptest = data[6] & 0b000011;
+                                    mf.rc.rcRowStatus[i] = status;
+                                }
 
-                                        mf.rc.rcRowStatus[i] = jptest;
+                                // Final counter
+                                mf.rc.fbFeedbackCounter = (int)data[9];
 
-                                       if (jptest == 1)
-                                       {
-                                            //if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
-                                       }
-
-                                        data[6] = ((byte)(data[6] >> 2));
-                                    }
-
-                                    numToTest = 12;
-                                    if (mf.tool.numOfSections < 12) numToTest = mf.tool.numOfSections;
-                                    for (int i = 8; i < numToTest; i++)
-                                    {
-                                        jptest = data[7] & 0b000011;
-
-                                        mf.rc.rcRowStatus[i] = jptest;
-
-                                        if (jptest == 1)
-                                        {
-                                            //if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
-                                        }
-
-                                        data[7] = ((byte)(data[7] >> 2));
-                                    }
-
-                                    numToTest = 16;
-                                    if (mf.tool.numOfSections < 16) numToTest = mf.tool.numOfSections;
-                                    for (int i = 12; i < numToTest; i++)
-                                    {
-                                        jptest = data[8] & 0b000011;
-
-                                        mf.rc.rcRowStatus[i] = jptest;
-
-                                        if (jptest == 1)
-                                        {
-                                            //if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
-                                        }
-
-                                        data[8] = ((byte)(data[8] >> 2));
-                                    }
-
-                                    mf.rc.fbFeedbackCounter = (int)data[9];
-
-                                    break;
+                                break;
 
                                 }
-                            //// Doubles array by row ////
+                            //// Doubles array by row //// NOT used
                             case 232:
                                 {
 
@@ -759,7 +760,7 @@ namespace AOGPlanterV2
                                     }
                                     break;
                                 }
-                            //// Skips array by row ////
+                            //// Skips array by row //// NOT used
                             case 231:
                                 {
                                     int skipIndex = -2;

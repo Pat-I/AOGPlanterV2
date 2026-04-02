@@ -64,6 +64,7 @@ namespace AOGPlanterV2.OldFarmer
             chartArea1.Name = "ChartArea1";
             popchart.ChartAreas.Add(chartArea1);
             legend1.Enabled = false;
+            legend1.ItemColumnSpacing = 75;
             legend1.Name = "Legend1";
             popchart.Legends.Add(legend1);
             popchart.Location = new Point(31, 0);

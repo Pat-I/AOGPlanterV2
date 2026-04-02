@@ -323,7 +323,9 @@ namespace AOGPlanterV2.OldFarmer
                 udp.p_224.pgn[udp.p_224.isMetric] = unchecked((byte)(int)0);
             }
             udp.p_233.pgn[udp.p_233.arraySpeed] = unchecked((byte)(int)(Properties.Settings.Default.setPlanterArraySpeed));
+            udp.p_224.MakeCRC();
             udp.SendPgnToLoop(udp.p_224.pgn);
+            udp.p_233.MakeCRC();
             udp.SendPgnToLoop(udp.p_233.pgn);
         }
 

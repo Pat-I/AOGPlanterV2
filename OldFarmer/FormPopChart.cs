@@ -21,18 +21,24 @@ namespace AOGPlanterV2.OldFarmer
         {
             Series s = popchart.Series["Population"];
             s.Points.Clear();
+
             for (int i = 0; i < mf.tool.numOfSections; i++)
             {
-                popchart.Series["Population"].Points.AddXY(i + 1, mf.rc.rcPopulationPercent[i]);
+                double val = mf.rc.rcPopulationPercent[i];
+                s.Points.AddXY(i + 1, val);
             }
-            lblGraphPop.Text = Properties.Settings.Default.setPlanterTargetPopulation.ToString();
-            popchart.ResetAutoValues();
 
-            for (int kk = 0; kk < mf.tool.numOfSections; kk++)
-            {
-                //					mf.rc.rcPopulation[kk] = 0;
-                //					mf.rc.rcPopulationPercent[kk] = 0;
-            }
+            lblGraphPop.Text = Properties.Settings.Default.setPlanterTargetPopulation.ToString();
+
+            var chartArea = popchart.ChartAreas[0];
+
+            chartArea.AxisY.Minimum = -15;
+            
+            
+                chartArea.AxisY.Maximum = 15;
+            chartArea.AxisY.Interval = 5;
+
+            popchart.Invalidate();
         }
         private void FormPopChart_Load(object sender, EventArgs e)
         {

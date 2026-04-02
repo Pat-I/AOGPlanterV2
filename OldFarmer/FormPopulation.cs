@@ -20,14 +20,34 @@ namespace AOGPlanterV2.OldFarmer
         {
             Series s = popChart2.Series["SeriesPop"];
             s.Points.Clear();
+
             for (int i = 0; i < mf.tool.numOfSections; i++)
             {
-                popChart2.Series["SeriesPop"].Points.AddXY(i + 1, mf.rc.rcPopulation[i]);
+                double val = mf.rc.rcPopulation[i];
+                if (double.IsNaN(val) || double.IsInfinity(val)) val = 0;
+                s.Points.AddXY(i + 1, val);
             }
-            lblTargetPop.Text = Properties.Settings.Default.setPlanterTargetPopulation.ToString();
-            popChart2.ResetAutoValues();
-        }
 
+            lblTargetPop.Text = Properties.Settings.Default.setPlanterTargetPopulation.ToString();
+
+            var chartArea = popChart2.ChartAreas[0];
+
+            chartArea.AxisY.Minimum = 0;
+
+            double target = Properties.Settings.Default.setPlanterTargetPopulation;
+            if (target > 0)
+            {
+                chartArea.AxisY.Maximum = target * 1.5;
+                chartArea.AxisY.Interval = target/5.0;
+            }
+            else
+            {
+                chartArea.AxisY.Maximum = 100000;
+                chartArea.AxisY.Interval = 20000;
+            }
+
+            popChart2.Invalidate();
+        }
         public PopulationChart2()
         {
             InitializeComponent();
