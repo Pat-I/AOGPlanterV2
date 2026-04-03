@@ -22,14 +22,22 @@ namespace AOGPlanterV2.OldFarmer
             s.Points.Clear();
 
             for (int i = 0; i < mf.tool.numOfSections; i++)
-            {
+            {             
                 double val = mf.rc.rcPopulation[i];
+                if (Properties.Settings.Default.setMenu_isMetric == false) val *= 0.404686;
                 if (double.IsNaN(val) || double.IsInfinity(val)) val = 0;
                 s.Points.AddXY(i + 1, val);
             }
 
-            lblTargetPop.Text = Properties.Settings.Default.setPlanterTargetPopulation.ToString();
-
+            if (Properties.Settings.Default.setMenu_isMetric)
+            {
+                lblTargetPop.Text = Properties.Settings.Default.setPlanterTargetPopulation.ToString();
+            }
+            else
+            {
+                lblTargetPop.Text = (Properties.Settings.Default.setPlanterTargetPopulation * 0.404686).ToString();
+            }
+                
             var chartArea = popChart2.ChartAreas[0];
 
             chartArea.AxisY.Minimum = 0;

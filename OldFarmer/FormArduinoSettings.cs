@@ -58,19 +58,19 @@ namespace AOGPlanterV2.OldFarmer
         private void Form1_Load(object sender, EventArgs e)
         {
             //			nUDPopulation.Value = (decimal)mf.rc.rcTargetPopulation;
-            numRows.Value = (int)AOGPlanterV2.Properties.Settings.Default.setPlanterNumRows;
-            nUDPopulation.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation;
-            nudRowSpacing.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth;
-            nudPlantingSpeed.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed;
-            nudPlanterDoublesFactor.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterDoublesFactor;
-            nudArraySpeed.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterArraySpeed;
             //            int numberOfSections = AOGPlanterV2.Properties.Settings.Default.setPlanterNumRows;
             //            nudUpDown.Value = numberOfSections; // AOGPlanterV2.Properties.Settings.Default.setPlanterNumRows;
+            SetValues();
+        }
+
+        private void SetValues()
+        {
             lblCurNumSections.Text = mf.rc.fbNumSections.ToString();
-            lblCurPopulation.Text = mf.rc.fbTargetPopulation.ToString();
-            lblCurRowWidth.Text = mf.rc.fbRowWidth.ToString("N1");
-            lblCurTargetSpeed.Text = mf.rc.fbTargetSpeed.ToString();
             lblCurDoubleFactor.Text = mf.rc.fbDoublesFactor.ToString("N2");
+
+            numRows.Value = (int)AOGPlanterV2.Properties.Settings.Default.setPlanterNumRows;
+            nudPlanterDoublesFactor.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterDoublesFactor;
+            nudArraySpeed.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterArraySpeed;
 
             if (AOGPlanterV2.Properties.Settings.Default.setPlanterAlarm_Active == true)
             {
@@ -98,36 +98,53 @@ namespace AOGPlanterV2.OldFarmer
                 btnPlanterMonitorActive.ForeColor = SystemColors.ControlText;
             }
 
-            if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
-            {
-                lblTargetPopulation.Text = "Target Population (per ha)";
-                lblPlantingSpeed.Text = "Planter Speed (kph)";
-                lblRowSpacing.Text = "Row Spacing (cm)";
-                //				nUDPopulation.Value = (decimal)(mf.rc.rcTargetPopulation * 2.471052f);
-                //				nudPlantingSpeed.Value = (decimal)(mf.rc.rcTargetSpeed * 1.609344f);
-                //				nudRowSpacing.Value = (decimal)(mf.rc.rcRowSpacing * 2.54f);
-            }
-
             if (AOGPlanterV2.Properties.Settings.Default.setPlanterSimulator_Active == false)
             {
-                btnPlanterSimulator.Text = "Simulator is Off";
+                btnPlanterSimulator.Text = "Simulator Off";
                 btnPlanterSimulator.BackColor = System.Drawing.Color.Green;
                 btnPlanterSimulator.ForeColor = SystemColors.ControlText;
             }
             else
             {
-                btnPlanterSimulator.Text = "Simulator is On";
+                btnPlanterSimulator.Text = "Simulator On";
                 btnPlanterSimulator.BackColor = System.Drawing.Color.Red;
                 btnPlanterSimulator.ForeColor = SystemColors.ButtonFace;
             }
 
             if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric == false)
             {
+                nUDPopulation.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation / 2.47105f);
+                nudRowSpacing.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth / 2.54f);
+                nudPlantingSpeed.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed * 0.621371f);
                 btnMetric.Text = "Imperial";
+                lblTargetPopulation.Text = "Target Population (per acre)";
+                lblPlantingSpeed.Text = "Planter Speed (mph)";
+                lblRowSpacing.Text = "Row Spacing (inches)";
+                lblCurPopulation.Text = (mf.rc.fbTargetPopulation / 2.47105f).ToString("N0");
+                lblCurRowWidth.Text = (mf.rc.fbRowWidth / 2.54f).ToString("N1");
+                lblCurTargetSpeed.Text = (mf.rc.fbTargetSpeed * 0.621371f).ToString("N1");
             }
             else
             {
+                nUDPopulation.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation;
+                nudRowSpacing.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth;
+                nudPlantingSpeed.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed;
                 btnMetric.Text = "Metric Units";
+                lblTargetPopulation.Text = "Target Population (per ha)";
+                lblPlantingSpeed.Text = "Planter Speed (kph)";
+                lblRowSpacing.Text = "Row Spacing (cm)";
+                lblCurPopulation.Text = mf.rc.fbTargetPopulation.ToString("N0");
+                lblCurRowWidth.Text = mf.rc.fbRowWidth.ToString("N1");
+                lblCurTargetSpeed.Text = mf.rc.fbTargetSpeed.ToString("N1");
+            }
+
+            if (AOGPlanterV2.Properties.Settings.Default.setAsLoopback == true)
+            {
+                btnNetwork.Text = "Loopback";
+            }
+            else
+            {
+                btnNetwork.Text = "Standalone";
             }
         }
 
@@ -142,9 +159,18 @@ namespace AOGPlanterV2.OldFarmer
             {
                 nudUpDown.DecimalPlaces = 1;
                 //                nudUpDown.Location = new Point(50, 30);
-                nudUpDown.Maximum = new decimal(new int[] { 210000, 0, 0, 0 });
+                nudUpDown.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
                 nudUpDown.Minimum = new decimal(new int[] { 1000, 0, 0, 0 });
-                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation;
+                if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
+                {
+                    nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation;
+                }
+                else
+                {
+                    nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation / 2.47105);
+                    
+                }
+                
                 keypad.StartPosition = FormStartPosition.CenterParent;
                 keypad.ShowInTaskbar = false;
                 keypad.Owner = this;
@@ -154,22 +180,34 @@ namespace AOGPlanterV2.OldFarmer
                 if (result == DialogResult.OK)
                 {
                     nudUpDown.Value = keypad.Result;
-                }
 
-                // Always return focus to numericUpDown1
-                //numericUpDown1.Focus();
-                nUDPopulation.Value = nudUpDown.Value;
-                Properties.Settings.Default.setPlanterTargetPopulation = (float)nudUpDown.Value;
-                btnSavePlanterSettings.Focus();
+
+                    // Always return focus to numericUpDown1
+                    //numericUpDown1.Focus();
+                    if (Properties.Settings.Default.setMenu_isMetric)
+                    {
+                        Properties.Settings.Default.setPlanterTargetPopulation = (float)nudUpDown.Value;
+                        if (Properties.Settings.Default.setPlanterTargetPopulation < 2500) Properties.Settings.Default.setPlanterTargetPopulation = 2500;
+                        nUDPopulation.Value = (decimal)Properties.Settings.Default.setPlanterTargetPopulation;
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.setPlanterTargetPopulation = (float)nudUpDown.Value * 2.47105f;
+                        if (Properties.Settings.Default.setPlanterTargetPopulation > 400000f) Properties.Settings.Default.setPlanterTargetPopulation = 400000f;
+                        nUDPopulation.Value = (decimal)(Properties.Settings.Default.setPlanterTargetPopulation / 2.47105);
+                    }                  
+                    Properties.Settings.Default.Save();
+                    btnSavePlanterSettings.Focus();
+                }
             }
         }
 
 
         private void nudPopulation_ValueChanged(object sender, EventArgs e)
         {
-            Properties.Settings.Default.setPlanterTargetPopulation = (float)nUDPopulation.Value;
-            Properties.Settings.Default.Save();
-            btnSavePlanterSettings.Focus();
+            //Properties.Settings.Default.setPlanterTargetPopulation = (float)nUDPopulation.Value;
+            //Properties.Settings.Default.Save();
+            //btnSavePlanterSettings.Focus();
         }
 
 
@@ -177,10 +215,17 @@ namespace AOGPlanterV2.OldFarmer
         {
             nudUpDown.DecimalPlaces = 1;
             //            nudUpDown.Location = new Point(50, 30);
-            nudUpDown.Maximum = new decimal(new int[] { 200, 0, 0, 0 });
+            nudUpDown.Maximum = new decimal(new int[] { 250, 0, 0, 0 });
             nudUpDown.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             //                numericUpDown1.Minimum = new float.Single(new float[] { .1f, 0, 0, 0 });
+            if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
+            { 
             nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth;
+            }
+            else
+            {
+                nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth / 2.54f);
+            }
             using (var keypad = new NumericKeypad(nudUpDown.Value))
             {
                 keypad.StartPosition = FormStartPosition.CenterParent;
@@ -192,21 +237,34 @@ namespace AOGPlanterV2.OldFarmer
                 if (result == DialogResult.OK)
                 {
                     nudUpDown.Value = keypad.Result;
-                }
 
-                // Always return focus to numericUpDown1
-                //  numericUpDown1.Focus();
-                nudRowSpacing.Value = nudUpDown.Value;
-                Properties.Settings.Default.setPlanterRowWidth = (float)nudUpDown.Value;
-                btnSavePlanterSettings.Focus();
+
+                    // Always return focus to numericUpDown1
+                    //  numericUpDown1.Focus();
+                    if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
+                    {
+                        Properties.Settings.Default.setPlanterRowWidth = (float)nudUpDown.Value;
+                        if (Properties.Settings.Default.setPlanterRowWidth < 2.55f) Properties.Settings.Default.setPlanterRowWidth = 2.55f;
+                        nudRowSpacing.Value = (decimal)Properties.Settings.Default.setPlanterRowWidth;
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.setPlanterRowWidth = (float)nudUpDown.Value * 2.54f;
+                        if (Properties.Settings.Default.setPlanterRowWidth > 250f) Properties.Settings.Default.setPlanterRowWidth = 250f;
+                        nudRowSpacing.Value = (decimal)(Properties.Settings.Default.setPlanterRowWidth / 2.54);
+                    }
+                    
+                    Properties.Settings.Default.Save();
+                    btnSavePlanterSettings.Focus();
+                }
             }
         }
 
         private void nudRowSpacing_valueChanged(object sender, EventArgs e)
         {
-            AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth = (float)nudRowSpacing.Value;
-            Properties.Settings.Default.Save();
-            btnSavePlanterSettings.Focus();
+            //AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth = (float)nudRowSpacing.Value;
+            //Properties.Settings.Default.Save();
+            //btnSavePlanterSettings.Focus();
         }
 
         private void nudPlantingSpeed_Clicked(object sender, EventArgs e)
@@ -214,8 +272,16 @@ namespace AOGPlanterV2.OldFarmer
             nudUpDown.DecimalPlaces = 1;
             //            nudUpDown.Location = new Point(50, 30);
             nudUpDown.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
-            nudUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed;
+            nudUpDown.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
+            if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
+            {
+                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed;
+            }
+            else
+            {
+                nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed * 0.621371f);
+            }
+                
             using (var keypad = new NumericKeypad(nudUpDown.Value))
             {
                 keypad.StartPosition = FormStartPosition.CenterParent;
@@ -227,22 +293,34 @@ namespace AOGPlanterV2.OldFarmer
                 if (result == DialogResult.OK)
                 {
                     nudUpDown.Value = keypad.Result;
-                }
 
-                // Always return focus to numericUpDown1
-                //  numericUpDown1.Focus();
-                nudPlantingSpeed.Value = nudUpDown.Value;
-                Properties.Settings.Default.setPlanterSpeed = (float)nudUpDown.Value;
-                Properties.Settings.Default.Save();
-                btnSavePlanterSettings.Focus();
+
+                    // Always return focus to numericUpDown1
+                    //  numericUpDown1.Focus();
+                    if (Properties.Settings.Default.setMenu_isMetric)
+                    {
+                        Properties.Settings.Default.setPlanterSpeed = (float)nudUpDown.Value;
+                        if (Properties.Settings.Default.setPlanterSpeed < 1) Properties.Settings.Default.setPlanterSpeed = 1;
+                        nudPlantingSpeed.Value = (decimal)Properties.Settings.Default.setPlanterSpeed;
+                    }
+                    else
+                    {
+                        Properties.Settings.Default.setPlanterSpeed = (float)nudUpDown.Value * 1.6093445f;
+                        if (Properties.Settings.Default.setPlanterSpeed > 25) Properties.Settings.Default.setPlanterSpeed = 25;
+                        nudPlantingSpeed.Value = (decimal)(Properties.Settings.Default.setPlanterSpeed * 0.621371f);
+                    }
+                    
+                    Properties.Settings.Default.Save();
+                    btnSavePlanterSettings.Focus();
+                }
             }
         }
 
         private void nudPlantingSpeed_ValueChanged(object sender, EventArgs e)
         {
-            AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed = (float)nudPlantingSpeed.Value;
-            Properties.Settings.Default.Save();
-            btnSavePlanterSettings.Focus();
+            //AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed = (float)nudPlantingSpeed.Value;
+            //Properties.Settings.Default.Save();
+            //btnSavePlanterSettings.Focus();
 
         }
 
@@ -256,7 +334,7 @@ namespace AOGPlanterV2.OldFarmer
                 btnPlanterMonitorActive.ForeColor = SystemColors.ControlText;
 
                 AOGPlanterV2.Properties.Settings.Default.setPlanterSimulator_Active = false;
-                btnPlanterSimulator.Text = "Simulator is Off";
+                btnPlanterSimulator.Text = "Simulator Off";
                 btnPlanterSimulator.BackColor = System.Drawing.Color.Green;
                 btnPlanterSimulator.ForeColor = SystemColors.ControlText;
 
@@ -276,7 +354,7 @@ namespace AOGPlanterV2.OldFarmer
                 btnPlanterMonitorActive.BackColor = System.Drawing.Color.Green;
                 btnPlanterMonitorActive.ForeColor = SystemColors.ButtonFace;
             }
-
+            Properties.Settings.Default.Save();
         }
 
         private void seedAlarm_Clicked(object sender, EventArgs e)
@@ -297,6 +375,7 @@ namespace AOGPlanterV2.OldFarmer
                 btnSeedAlarm.Text = "Seed Alarm is Active";
                 Properties.Settings.Default.Save();
             }
+            Properties.Settings.Default.Save();
         }
 
 
@@ -327,6 +406,8 @@ namespace AOGPlanterV2.OldFarmer
             udp.SendPgnToLoop(udp.p_224.pgn);
             udp.p_233.MakeCRC();
             udp.SendPgnToLoop(udp.p_233.pgn);
+
+            SetValues();
         }
 
 
@@ -359,6 +440,7 @@ namespace AOGPlanterV2.OldFarmer
         {
             AOGPlanterV2.Properties.Settings.Default.setPlanterDoublesFactor = (float)nudPlanterDoublesFactor.Value;
             btnSavePlanterSettings.Focus();
+            Properties.Settings.Default.Save();
         }
 
         private void nudPlanterDoublesFactor_clicked(object sender, EventArgs e)
@@ -379,14 +461,15 @@ namespace AOGPlanterV2.OldFarmer
                 if (result == DialogResult.OK)
                 {
                     nudUpDown.Value = keypad.Result;
-                }
 
-                // Always return focus to numericUpDown1
-                //  numericUpDown1.Focus();
-                nudPlanterDoublesFactor.Value = nudUpDown.Value;
-                Properties.Settings.Default.setPlanterDoublesFactor = (float)nudUpDown.Value;
-                Properties.Settings.Default.Save();
-                btnSavePlanterSettings.Focus();
+
+                    // Always return focus to numericUpDown1
+                    //  numericUpDown1.Focus();
+                    nudPlanterDoublesFactor.Value = nudUpDown.Value;
+                    Properties.Settings.Default.setPlanterDoublesFactor = (float)nudUpDown.Value;
+                    Properties.Settings.Default.Save();
+                    btnSavePlanterSettings.Focus();
+                }
             }
 
         }
@@ -396,7 +479,7 @@ namespace AOGPlanterV2.OldFarmer
             if (AOGPlanterV2.Properties.Settings.Default.setPlanterSimulator_Active == true)
             {
                 AOGPlanterV2.Properties.Settings.Default.setPlanterSimulator_Active = false;
-                btnPlanterSimulator.Text = "Simulator is Off";
+                btnPlanterSimulator.Text = "Simulator Off";
                 btnPlanterSimulator.BackColor = System.Drawing.Color.Green;
                 btnPlanterSimulator.ForeColor = SystemColors.ControlText;
                 Properties.Settings.Default.Save();
@@ -404,7 +487,7 @@ namespace AOGPlanterV2.OldFarmer
             else
             {
                 AOGPlanterV2.Properties.Settings.Default.setPlanterSimulator_Active = true;
-                btnPlanterSimulator.Text = "Simulator is On";
+                btnPlanterSimulator.Text = "Simulator On";
                 btnPlanterSimulator.BackColor = System.Drawing.Color.Red;
                 btnPlanterSimulator.ForeColor = SystemColors.ButtonFace;
                 Properties.Settings.Default.Save();
@@ -436,14 +519,15 @@ namespace AOGPlanterV2.OldFarmer
                 if (result == DialogResult.OK)
                 {
                     numRows.Value = keypad.Result;
-                }
 
-                // Always return focus to numericUpDown1
-                //  NumericKeypad.Focus();
-                //     numRows.Value = (decimal)numberOfRows;
-                Properties.Settings.Default.setPlanterNumRows = (int)numRows.Value;
-                Properties.Settings.Default.Save();
-                btnSavePlanterSettings.Focus();
+
+                    // Always return focus to numericUpDown1
+                    //  NumericKeypad.Focus();
+                    //     numRows.Value = (decimal)numberOfRows;
+                    Properties.Settings.Default.setPlanterNumRows = (int)numRows.Value;
+                    Properties.Settings.Default.Save();
+                    btnSavePlanterSettings.Focus();
+                }
             }
         }
 
@@ -496,13 +580,28 @@ namespace AOGPlanterV2.OldFarmer
             if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric == false)
             {
                 AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric = true;
-                btnMetric.Text = "Metric Units";
             }
             else
             {
                 AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric = false;
-                btnMetric.Text = "Imperial";
             }
+            Properties.Settings.Default.Save();
+            SetValues();
+        }
+
+        private void btnNetwork_Click(object sender, EventArgs e)
+        {
+            if (AOGPlanterV2.Properties.Settings.Default.setAsLoopback == false)
+            {
+                AOGPlanterV2.Properties.Settings.Default.setAsLoopback = true;
+                btnNetwork.Text = "Loopback";
+            }
+            else
+            {
+                AOGPlanterV2.Properties.Settings.Default.setAsLoopback = false;
+                btnNetwork.Text = "Standalone";
+            }
+            Properties.Settings.Default.Save();
         }
     }
 }

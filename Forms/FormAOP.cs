@@ -306,7 +306,14 @@ namespace AOGPlanterV2
         private void Timer1_Tick(object sender, EventArgs e)
         {
             txtUpTime.Text = DateTime.Now.ToString("hh:mm:ss");
-            lblPopulation.Text = rc.sumPopulation.ToString("F0");
+            if (Properties.Settings.Default.setMenu_isMetric)
+            {
+                lblPopulation.Text = rc.sumPopulation.ToString("F0");
+            }
+            else
+            {
+                lblPopulation.Text = (rc.sumPopulation * 0.404686f).ToString("F0");
+            }          
             lblSingulation.Text = rc.sumSingulation.ToString("F1") + "%";
             lblSkipPercent.Text = rc.sumSkipPercent.ToString("F1") + "%";
             lblDoublesPercent.Text = rc.sumDoublePercent.ToString("F1") + "%";

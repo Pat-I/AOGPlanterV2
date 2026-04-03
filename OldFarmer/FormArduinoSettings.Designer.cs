@@ -61,6 +61,8 @@ namespace AOGPlanterV2.OldFarmer
             lblArraySpeed = new Label();
             nudArraySpeed = new NumericUpDown();
             btnMetric = new Button();
+            btnNetwork = new Button();
+            label6 = new Label();
             ((System.ComponentModel.ISupportInitialize)nUDPopulation).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudRowSpacing).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudPlantingSpeed).BeginInit();
@@ -74,7 +76,7 @@ namespace AOGPlanterV2.OldFarmer
             label1.AutoSize = true;
             label1.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label1.ForeColor = SystemColors.ButtonFace;
-            label1.Location = new Point(245, 10);
+            label1.Location = new Point(185, 10);
             label1.Margin = new Padding(4, 0, 4, 0);
             label1.Name = "label1";
             label1.Size = new Size(327, 31);
@@ -86,7 +88,7 @@ namespace AOGPlanterV2.OldFarmer
             lblTargetPopulation.AutoSize = true;
             lblTargetPopulation.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblTargetPopulation.ForeColor = SystemColors.ButtonFace;
-            lblTargetPopulation.Location = new Point(78, 230);
+            lblTargetPopulation.Location = new Point(15, 107);
             lblTargetPopulation.Margin = new Padding(4, 0, 4, 0);
             lblTargetPopulation.Name = "lblTargetPopulation";
             lblTargetPopulation.Size = new Size(234, 20);
@@ -98,7 +100,7 @@ namespace AOGPlanterV2.OldFarmer
             lblRowSpacing.AutoSize = true;
             lblRowSpacing.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblRowSpacing.ForeColor = SystemColors.ButtonFace;
-            lblRowSpacing.Location = new Point(78, 303);
+            lblRowSpacing.Location = new Point(15, 170);
             lblRowSpacing.Margin = new Padding(4, 0, 4, 0);
             lblRowSpacing.Name = "lblRowSpacing";
             lblRowSpacing.Size = new Size(183, 20);
@@ -110,7 +112,7 @@ namespace AOGPlanterV2.OldFarmer
             lblPlantingSpeed.AutoSize = true;
             lblPlantingSpeed.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblPlantingSpeed.ForeColor = SystemColors.ButtonFace;
-            lblPlantingSpeed.Location = new Point(78, 373);
+            lblPlantingSpeed.Location = new Point(16, 224);
             lblPlantingSpeed.Margin = new Padding(4, 0, 4, 0);
             lblPlantingSpeed.Name = "lblPlantingSpeed";
             lblPlantingSpeed.Size = new Size(182, 20);
@@ -122,7 +124,7 @@ namespace AOGPlanterV2.OldFarmer
             label5.AutoSize = true;
             label5.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label5.ForeColor = SystemColors.ButtonFace;
-            label5.Location = new Point(78, 542);
+            label5.Location = new Point(13, 365);
             label5.Margin = new Padding(4, 0, 4, 0);
             label5.Name = "label5";
             label5.Size = new Size(225, 20);
@@ -137,7 +139,7 @@ namespace AOGPlanterV2.OldFarmer
             btnSavePlanterSettings.FlatStyle = FlatStyle.Flat;
             btnSavePlanterSettings.ForeColor = SystemColors.ButtonFace;
             btnSavePlanterSettings.Image = Resources.Cancel64;
-            btnSavePlanterSettings.Location = new Point(607, 539);
+            btnSavePlanterSettings.Location = new Point(398, 372);
             btnSavePlanterSettings.Margin = new Padding(4, 3, 4, 3);
             btnSavePlanterSettings.Name = "btnSavePlanterSettings";
             btnSavePlanterSettings.Size = new Size(97, 91);
@@ -149,10 +151,9 @@ namespace AOGPlanterV2.OldFarmer
             // nUDPopulation
             // 
             nUDPopulation.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            nUDPopulation.Location = new Point(385, 209);
+            nUDPopulation.Location = new Point(257, 110);
             nUDPopulation.Margin = new Padding(4, 3, 4, 3);
-            nUDPopulation.Maximum = new decimal(new int[] { 210000, 0, 0, 0 });
-            nUDPopulation.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nUDPopulation.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
             nUDPopulation.Name = "nUDPopulation";
             nUDPopulation.Size = new Size(136, 38);
             nUDPopulation.TabIndex = 214;
@@ -165,9 +166,9 @@ namespace AOGPlanterV2.OldFarmer
             nudRowSpacing.DecimalPlaces = 1;
             nudRowSpacing.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nudRowSpacing.Increment = new decimal(new int[] { 1, 0, 0, 65536 });
-            nudRowSpacing.Location = new Point(385, 283);
+            nudRowSpacing.Location = new Point(257, 170);
             nudRowSpacing.Margin = new Padding(4, 3, 4, 3);
-            nudRowSpacing.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudRowSpacing.Maximum = new decimal(new int[] { 250, 0, 0, 0 });
             nudRowSpacing.Name = "nudRowSpacing";
             nudRowSpacing.Size = new Size(136, 38);
             nudRowSpacing.TabIndex = 215;
@@ -179,9 +180,9 @@ namespace AOGPlanterV2.OldFarmer
             // 
             nudPlantingSpeed.DecimalPlaces = 1;
             nudPlantingSpeed.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            nudPlantingSpeed.Location = new Point(385, 352);
+            nudPlantingSpeed.Location = new Point(257, 230);
             nudPlantingSpeed.Margin = new Padding(4, 3, 4, 3);
-            nudPlantingSpeed.Maximum = new decimal(new int[] { 15, 0, 0, 0 });
+            nudPlantingSpeed.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
             nudPlantingSpeed.Name = "nudPlantingSpeed";
             nudPlantingSpeed.Size = new Size(136, 38);
             nudPlantingSpeed.TabIndex = 216;
@@ -193,10 +194,10 @@ namespace AOGPlanterV2.OldFarmer
             // 
             btnPlanterMonitorActive.BackColor = Color.LawnGreen;
             btnPlanterMonitorActive.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPlanterMonitorActive.Location = new Point(46, 84);
+            btnPlanterMonitorActive.Location = new Point(13, 44);
             btnPlanterMonitorActive.Margin = new Padding(4, 3, 4, 3);
             btnPlanterMonitorActive.Name = "btnPlanterMonitorActive";
-            btnPlanterMonitorActive.Size = new Size(350, 81);
+            btnPlanterMonitorActive.Size = new Size(250, 60);
             btnPlanterMonitorActive.TabIndex = 220;
             btnPlanterMonitorActive.Text = "Planter Monitor is Active";
             btnPlanterMonitorActive.UseVisualStyleBackColor = false;
@@ -206,10 +207,10 @@ namespace AOGPlanterV2.OldFarmer
             // 
             btnSeedAlarm.BackColor = Color.LawnGreen;
             btnSeedAlarm.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnSeedAlarm.Location = new Point(552, 84);
+            btnSeedAlarm.Location = new Point(418, 44);
             btnSeedAlarm.Margin = new Padding(4, 3, 4, 3);
             btnSeedAlarm.Name = "btnSeedAlarm";
-            btnSeedAlarm.Size = new Size(350, 81);
+            btnSeedAlarm.Size = new Size(250, 60);
             btnSeedAlarm.TabIndex = 221;
             btnSeedAlarm.Text = "Seed Alarm is Active";
             btnSeedAlarm.UseVisualStyleBackColor = false;
@@ -222,7 +223,7 @@ namespace AOGPlanterV2.OldFarmer
             btnSendPlanterConfigPGN.FlatStyle = FlatStyle.Flat;
             btnSendPlanterConfigPGN.Image = Resources.ToolAcceptChange;
             btnSendPlanterConfigPGN.ImeMode = ImeMode.NoControl;
-            btnSendPlanterConfigPGN.Location = new Point(747, 478);
+            btnSendPlanterConfigPGN.Location = new Point(513, 353);
             btnSendPlanterConfigPGN.Margin = new Padding(4, 3, 4, 3);
             btnSendPlanterConfigPGN.Name = "btnSendPlanterConfigPGN";
             btnSendPlanterConfigPGN.Size = new Size(155, 72);
@@ -236,12 +237,12 @@ namespace AOGPlanterV2.OldFarmer
             lblPMSS.Font = new Font("Tahoma", 15.75F);
             lblPMSS.ForeColor = SystemColors.ButtonFace;
             lblPMSS.ImeMode = ImeMode.NoControl;
-            lblPMSS.Location = new Point(685, 561);
+            lblPMSS.Location = new Point(551, 421);
             lblPMSS.Margin = new Padding(4, 0, 4, 0);
             lblPMSS.Name = "lblPMSS";
-            lblPMSS.Size = new Size(201, 35);
+            lblPMSS.Size = new Size(83, 41);
             lblPMSS.TabIndex = 503;
-            lblPMSS.Text = "Send +  Save";
+            lblPMSS.Text = "Update";
             lblPMSS.TextAlign = ContentAlignment.MiddleRight;
             // 
             // lblCurPopulation
@@ -249,7 +250,7 @@ namespace AOGPlanterV2.OldFarmer
             lblCurPopulation.AutoSize = true;
             lblCurPopulation.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblCurPopulation.ForeColor = Color.LightGreen;
-            lblCurPopulation.Location = new Point(147, 257);
+            lblCurPopulation.Location = new Point(168, 127);
             lblCurPopulation.Margin = new Padding(4, 0, 4, 0);
             lblCurPopulation.Name = "lblCurPopulation";
             lblCurPopulation.Size = new Size(24, 30);
@@ -261,7 +262,7 @@ namespace AOGPlanterV2.OldFarmer
             lblCurRowWidth.AutoSize = true;
             lblCurRowWidth.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblCurRowWidth.ForeColor = Color.LightGreen;
-            lblCurRowWidth.Location = new Point(147, 339);
+            lblCurRowWidth.Location = new Point(100, 190);
             lblCurRowWidth.Margin = new Padding(4, 0, 4, 0);
             lblCurRowWidth.Name = "lblCurRowWidth";
             lblCurRowWidth.Size = new Size(22, 25);
@@ -273,7 +274,7 @@ namespace AOGPlanterV2.OldFarmer
             lblCurTargetSpeed.AutoSize = true;
             lblCurTargetSpeed.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblCurTargetSpeed.ForeColor = Color.LightGreen;
-            lblCurTargetSpeed.Location = new Point(147, 407);
+            lblCurTargetSpeed.Location = new Point(100, 253);
             lblCurTargetSpeed.Margin = new Padding(4, 0, 4, 0);
             lblCurTargetSpeed.Name = "lblCurTargetSpeed";
             lblCurTargetSpeed.Size = new Size(22, 25);
@@ -285,7 +286,7 @@ namespace AOGPlanterV2.OldFarmer
             lblCurNumSections.AutoSize = true;
             lblCurNumSections.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblCurNumSections.ForeColor = Color.LightGreen;
-            lblCurNumSections.Location = new Point(147, 576);
+            lblCurNumSections.Location = new Point(76, 395);
             lblCurNumSections.Margin = new Padding(4, 0, 4, 0);
             lblCurNumSections.Name = "lblCurNumSections";
             lblCurNumSections.Size = new Size(22, 25);
@@ -297,7 +298,7 @@ namespace AOGPlanterV2.OldFarmer
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = Color.LightGreen;
-            label2.Location = new Point(63, 257);
+            label2.Location = new Point(13, 127);
             label2.Margin = new Padding(4, 0, 4, 0);
             label2.Name = "label2";
             label2.Size = new Size(76, 25);
@@ -309,7 +310,7 @@ namespace AOGPlanterV2.OldFarmer
             label3.AutoSize = true;
             label3.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label3.ForeColor = SystemColors.ButtonFace;
-            label3.Location = new Point(78, 460);
+            label3.Location = new Point(13, 301);
             label3.Margin = new Padding(4, 0, 4, 0);
             label3.Name = "label3";
             label3.Size = new Size(98, 20);
@@ -321,7 +322,7 @@ namespace AOGPlanterV2.OldFarmer
             nudPlanterDoublesFactor.DecimalPlaces = 2;
             nudPlanterDoublesFactor.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             nudPlanterDoublesFactor.Increment = new decimal(new int[] { 1, 0, 0, 131072 });
-            nudPlanterDoublesFactor.Location = new Point(195, 448);
+            nudPlanterDoublesFactor.Location = new Point(119, 289);
             nudPlanterDoublesFactor.Margin = new Padding(4, 3, 4, 3);
             nudPlanterDoublesFactor.Maximum = new decimal(new int[] { 55, 0, 0, 131072 });
             nudPlanterDoublesFactor.Minimum = new decimal(new int[] { 1, 0, 0, 131072 });
@@ -337,7 +338,7 @@ namespace AOGPlanterV2.OldFarmer
             label4.AutoSize = true;
             label4.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.ButtonFace;
-            label4.Location = new Point(365, 460);
+            label4.Location = new Point(267, 301);
             label4.Margin = new Padding(4, 0, 4, 0);
             label4.Name = "label4";
             label4.Size = new Size(152, 20);
@@ -350,7 +351,7 @@ namespace AOGPlanterV2.OldFarmer
             lblCurDoubleFactor.AutoSize = true;
             lblCurDoubleFactor.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblCurDoubleFactor.ForeColor = Color.LightGreen;
-            lblCurDoubleFactor.Location = new Point(150, 501);
+            lblCurDoubleFactor.Location = new Point(76, 330);
             lblCurDoubleFactor.Margin = new Padding(4, 0, 4, 0);
             lblCurDoubleFactor.Name = "lblCurDoubleFactor";
             lblCurDoubleFactor.Size = new Size(22, 25);
@@ -360,11 +361,12 @@ namespace AOGPlanterV2.OldFarmer
             // btnPlanterSimulator
             // 
             btnPlanterSimulator.BackColor = Color.LawnGreen;
+            btnPlanterSimulator.Enabled = false;
             btnPlanterSimulator.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnPlanterSimulator.Location = new Point(46, 612);
+            btnPlanterSimulator.Location = new Point(7, 423);
             btnPlanterSimulator.Margin = new Padding(4, 3, 4, 3);
             btnPlanterSimulator.Name = "btnPlanterSimulator";
-            btnPlanterSimulator.Size = new Size(252, 47);
+            btnPlanterSimulator.Size = new Size(170, 40);
             btnPlanterSimulator.TabIndex = 513;
             btnPlanterSimulator.Text = "Simulator on";
             btnPlanterSimulator.UseVisualStyleBackColor = false;
@@ -373,7 +375,7 @@ namespace AOGPlanterV2.OldFarmer
             // numRows
             // 
             numRows.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            numRows.Location = new Point(385, 544);
+            numRows.Location = new Point(257, 353);
             numRows.Maximum = new decimal(new int[] { 32, 0, 0, 0 });
             numRows.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numRows.Name = "numRows";
@@ -388,7 +390,7 @@ namespace AOGPlanterV2.OldFarmer
             lblArraySpeed.AutoSize = true;
             lblArraySpeed.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblArraySpeed.ForeColor = SystemColors.ButtonFace;
-            lblArraySpeed.Location = new Point(580, 230);
+            lblArraySpeed.Location = new Point(457, 110);
             lblArraySpeed.Margin = new Padding(4, 0, 4, 0);
             lblArraySpeed.Name = "lblArraySpeed";
             lblArraySpeed.Size = new Size(211, 20);
@@ -398,9 +400,9 @@ namespace AOGPlanterV2.OldFarmer
             // nudArraySpeed
             // 
             nudArraySpeed.Font = new Font("Microsoft Sans Serif", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            nudArraySpeed.Location = new Point(830, 212);
+            nudArraySpeed.Location = new Point(596, 143);
             nudArraySpeed.Margin = new Padding(4, 3, 4, 3);
-            nudArraySpeed.Maximum = new decimal(new int[] { 210000, 0, 0, 0 });
+            nudArraySpeed.Maximum = new decimal(new int[] { 12, 0, 0, 0 });
             nudArraySpeed.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             nudArraySpeed.Name = "nudArraySpeed";
             nudArraySpeed.Size = new Size(72, 38);
@@ -414,7 +416,7 @@ namespace AOGPlanterV2.OldFarmer
             btnMetric.BackColor = Color.ForestGreen;
             btnMetric.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnMetric.ForeColor = SystemColors.ButtonFace;
-            btnMetric.Location = new Point(330, 612);
+            btnMetric.Location = new Point(185, 416);
             btnMetric.Margin = new Padding(4, 3, 4, 3);
             btnMetric.Name = "btnMetric";
             btnMetric.Size = new Size(175, 47);
@@ -423,12 +425,40 @@ namespace AOGPlanterV2.OldFarmer
             btnMetric.UseVisualStyleBackColor = false;
             btnMetric.Click += Metric_Click;
             // 
+            // btnNetwork
+            // 
+            btnNetwork.BackColor = Color.ForestGreen;
+            btnNetwork.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            btnNetwork.ForeColor = SystemColors.ButtonFace;
+            btnNetwork.Location = new Point(493, 242);
+            btnNetwork.Margin = new Padding(4, 3, 4, 3);
+            btnNetwork.Name = "btnNetwork";
+            btnNetwork.Size = new Size(175, 47);
+            btnNetwork.TabIndex = 518;
+            btnNetwork.Text = "Loopback";
+            btnNetwork.UseVisualStyleBackColor = false;
+            btnNetwork.Click += btnNetwork_Click;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Font = new Font("Microsoft Sans Serif", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label6.ForeColor = SystemColors.ButtonFace;
+            label6.Location = new Point(467, 219);
+            label6.Margin = new Padding(4, 0, 4, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(204, 20);
+            label6.TabIndex = 519;
+            label6.Text = "Network(restart needed)";
+            // 
             // FormArduinoSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(50, 50, 70);
-            ClientSize = new Size(933, 689);
+            ClientSize = new Size(684, 471);
+            Controls.Add(label6);
+            Controls.Add(btnNetwork);
             Controls.Add(btnMetric);
             Controls.Add(nudArraySpeed);
             Controls.Add(lblArraySpeed);
@@ -500,5 +530,7 @@ namespace AOGPlanterV2.OldFarmer
         private Label lblArraySpeed;
         private NumericUpDown nudArraySpeed;
         private Button btnMetric;
+        private Button btnNetwork;
+        private Label label6;
     }
 }

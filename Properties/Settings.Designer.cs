@@ -1536,5 +1536,29 @@ namespace AOGPlanterV2.Properties {
                 this["setPlanterArraySpeed"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool setAsLoopback {
+            get {
+                return ((bool)(this["setAsLoopback"]));
+            }
+            set {
+                this["setAsLoopback"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string setNext {
+            get {
+                return ((string)(this["setNext"]));
+            }
+            set {
+                this["setNext"] = value;
+            }
+        }
     }
 }
