@@ -1,3 +1,4 @@
+using Microsoft.VisualBasic;
 using OpenTK.Audio.OpenAL;
 
 namespace AOGPlanterV2.OldFarmer
@@ -155,22 +156,21 @@ namespace AOGPlanterV2.OldFarmer
 
         private void nudPopulation_Click(object sender, EventArgs e)
         {
-            using (var keypad = new NumericKeypad(nudUpDown.Value))
+            nudUpDown.DecimalPlaces = 0;
+            if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
             {
-                nudUpDown.DecimalPlaces = 1;
-                //                nudUpDown.Location = new Point(50, 30);
-                nudUpDown.Maximum = new decimal(new int[] { 999999, 0, 0, 0 });
-                nudUpDown.Minimum = new decimal(new int[] { 1000, 0, 0, 0 });
-                if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
-                {
-                    nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation;
-                }
-                else
-                {
-                    nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation / 2.47105);
-                    
-                }
-                
+                nudUpDown.Maximum = new decimal(518920);
+                nudUpDown.Minimum = new decimal(2500);
+                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation;             
+            }
+            else
+            {
+                nudUpDown.Maximum = new decimal(210000);
+                nudUpDown.Minimum = new decimal(1000);
+                nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation / 2.47105);
+            }
+            using (var keypad = new NumericKeypad(nudUpDown.Value, nudUpDown.Minimum, nudUpDown.Maximum))
+            {               
                 keypad.StartPosition = FormStartPosition.CenterParent;
                 keypad.ShowInTaskbar = false;
                 keypad.Owner = this;
@@ -188,12 +188,14 @@ namespace AOGPlanterV2.OldFarmer
                     {
                         Properties.Settings.Default.setPlanterTargetPopulation = (float)nudUpDown.Value;
                         if (Properties.Settings.Default.setPlanterTargetPopulation < 2500) Properties.Settings.Default.setPlanterTargetPopulation = 2500;
+                        if (Properties.Settings.Default.setPlanterTargetPopulation > 518920f) Properties.Settings.Default.setPlanterTargetPopulation = 518920f;
                         nUDPopulation.Value = (decimal)Properties.Settings.Default.setPlanterTargetPopulation;
                     }
                     else
                     {
                         Properties.Settings.Default.setPlanterTargetPopulation = (float)nudUpDown.Value * 2.47105f;
-                        if (Properties.Settings.Default.setPlanterTargetPopulation > 400000f) Properties.Settings.Default.setPlanterTargetPopulation = 400000f;
+                        if (Properties.Settings.Default.setPlanterTargetPopulation < 2500) Properties.Settings.Default.setPlanterTargetPopulation = 2500;
+                        if (Properties.Settings.Default.setPlanterTargetPopulation > 518920f) Properties.Settings.Default.setPlanterTargetPopulation = 518920f;
                         nUDPopulation.Value = (decimal)(Properties.Settings.Default.setPlanterTargetPopulation / 2.47105);
                     }                  
                     Properties.Settings.Default.Save();
@@ -215,18 +217,20 @@ namespace AOGPlanterV2.OldFarmer
         {
             nudUpDown.DecimalPlaces = 1;
             //            nudUpDown.Location = new Point(50, 30);
-            nudUpDown.Maximum = new decimal(new int[] { 250, 0, 0, 0 });
-            nudUpDown.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             //                numericUpDown1.Minimum = new float.Single(new float[] { .1f, 0, 0, 0 });
             if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
-            { 
-            nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth;
+            {
+                nudUpDown.Maximum = new decimal(250);
+                nudUpDown.Minimum = new decimal(2.5);
+                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth;
             }
             else
             {
+                nudUpDown.Maximum = new decimal(100);
+                nudUpDown.Minimum = new decimal(1);
                 nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterRowWidth / 2.54f);
             }
-            using (var keypad = new NumericKeypad(nudUpDown.Value))
+            using (var keypad = new NumericKeypad(nudUpDown.Value, nudUpDown.Minimum, nudUpDown.Maximum))
             {
                 keypad.StartPosition = FormStartPosition.CenterParent;
                 keypad.ShowInTaskbar = false;
@@ -245,11 +249,13 @@ namespace AOGPlanterV2.OldFarmer
                     {
                         Properties.Settings.Default.setPlanterRowWidth = (float)nudUpDown.Value;
                         if (Properties.Settings.Default.setPlanterRowWidth < 2.55f) Properties.Settings.Default.setPlanterRowWidth = 2.55f;
+                        if (Properties.Settings.Default.setPlanterRowWidth > 250f) Properties.Settings.Default.setPlanterRowWidth = 250f;
                         nudRowSpacing.Value = (decimal)Properties.Settings.Default.setPlanterRowWidth;
                     }
                     else
                     {
                         Properties.Settings.Default.setPlanterRowWidth = (float)nudUpDown.Value * 2.54f;
+                        if (Properties.Settings.Default.setPlanterRowWidth < 2.55f) Properties.Settings.Default.setPlanterRowWidth = 2.55f;
                         if (Properties.Settings.Default.setPlanterRowWidth > 250f) Properties.Settings.Default.setPlanterRowWidth = 250f;
                         nudRowSpacing.Value = (decimal)(Properties.Settings.Default.setPlanterRowWidth / 2.54);
                     }
@@ -271,18 +277,20 @@ namespace AOGPlanterV2.OldFarmer
         {
             nudUpDown.DecimalPlaces = 1;
             //            nudUpDown.Location = new Point(50, 30);
-            nudUpDown.Maximum = new decimal(new int[] { 50, 0, 0, 0 });
-            nudUpDown.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
             if (AOGPlanterV2.Properties.Settings.Default.setMenu_isMetric)
             {
-                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed;
+                nudUpDown.Maximum = new decimal(50);
+                nudUpDown.Minimum = new decimal(0.1);
+                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed; 
             }
             else
             {
+                nudUpDown.Maximum = new decimal(31);
+                nudUpDown.Minimum = new decimal(0.1);
                 nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed * 0.621371f);
             }
                 
-            using (var keypad = new NumericKeypad(nudUpDown.Value))
+            using (var keypad = new NumericKeypad(nudUpDown.Value, nudUpDown.Minimum, nudUpDown.Maximum))
             {
                 keypad.StartPosition = FormStartPosition.CenterParent;
                 keypad.ShowInTaskbar = false;
@@ -300,13 +308,15 @@ namespace AOGPlanterV2.OldFarmer
                     if (Properties.Settings.Default.setMenu_isMetric)
                     {
                         Properties.Settings.Default.setPlanterSpeed = (float)nudUpDown.Value;
-                        if (Properties.Settings.Default.setPlanterSpeed < 1) Properties.Settings.Default.setPlanterSpeed = 1;
+                        if (Properties.Settings.Default.setPlanterSpeed < 0.2f) Properties.Settings.Default.setPlanterSpeed = 0.2f;
+                        if (Properties.Settings.Default.setPlanterSpeed > 49f) Properties.Settings.Default.setPlanterSpeed = 49f;
                         nudPlantingSpeed.Value = (decimal)Properties.Settings.Default.setPlanterSpeed;
                     }
                     else
                     {
                         Properties.Settings.Default.setPlanterSpeed = (float)nudUpDown.Value * 1.6093445f;
-                        if (Properties.Settings.Default.setPlanterSpeed > 25) Properties.Settings.Default.setPlanterSpeed = 25;
+                        if (Properties.Settings.Default.setPlanterSpeed < 0.2f) Properties.Settings.Default.setPlanterSpeed = 0.2f;
+                        if (Properties.Settings.Default.setPlanterSpeed > 49f) Properties.Settings.Default.setPlanterSpeed = 49f;
                         nudPlantingSpeed.Value = (decimal)(Properties.Settings.Default.setPlanterSpeed * 0.621371f);
                     }
                     
@@ -447,10 +457,10 @@ namespace AOGPlanterV2.OldFarmer
         {
             nudUpDown.DecimalPlaces = 2;
             //            nudUpDown.Location = new Point(50, 30);
-            nudUpDown.Maximum = new decimal(new int[] { 1, 0, 0, 0 });
-            nudUpDown.Minimum = new decimal(new int[] { 0, 0, 0, 0 });
+            nudUpDown.Maximum = new decimal(0.55);
+            nudUpDown.Minimum = new decimal(0.01);
             nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterDoublesFactor;
-            using (var keypad = new NumericKeypad(nudUpDown.Value))
+            using (var keypad = new NumericKeypad(nudUpDown.Value, nudUpDown.Minimum, nudUpDown.Maximum))
             {
                 keypad.StartPosition = FormStartPosition.CenterParent;
                 keypad.ShowInTaskbar = false;
@@ -466,6 +476,8 @@ namespace AOGPlanterV2.OldFarmer
                     // Always return focus to numericUpDown1
                     //  numericUpDown1.Focus();
                     nudPlanterDoublesFactor.Value = nudUpDown.Value;
+                    if (Properties.Settings.Default.setPlanterDoublesFactor < 0.01f) Properties.Settings.Default.setPlanterDoublesFactor = 0.01f;
+                    if (Properties.Settings.Default.setPlanterDoublesFactor > 0.55f) Properties.Settings.Default.setPlanterDoublesFactor = 0.55f;
                     Properties.Settings.Default.setPlanterDoublesFactor = (float)nudUpDown.Value;
                     Properties.Settings.Default.Save();
                     btnSavePlanterSettings.Focus();
@@ -505,10 +517,10 @@ namespace AOGPlanterV2.OldFarmer
         {
             nudUpDown.DecimalPlaces = 0;
             //            nudUpDown.Location = new Point(50, 30);
-            nudUpDown.Maximum = new decimal(new int[] { 32, 0, 0, 0 });
-            nudUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudUpDown.Maximum = new decimal(16);
+            nudUpDown.Minimum = new decimal(1);
             nudUpDown.Value = (decimal)Properties.Settings.Default.setPlanterNumRows;
-            using (var keypad = new NumericKeypad(nudUpDown.Value))
+            using (var keypad = new NumericKeypad(nudUpDown.Value, nudUpDown.Minimum, nudUpDown.Maximum))
             {
                 keypad.StartPosition = FormStartPosition.CenterParent;
                 keypad.ShowInTaskbar = false;
@@ -542,10 +554,10 @@ namespace AOGPlanterV2.OldFarmer
         {
             nudUpDown.DecimalPlaces = 0;
             //            nudUpDown.Location = new Point(50, 30);
-            nudUpDown.Maximum = new decimal(new int[] { 12, 0, 0, 0 });
-            nudUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            nudUpDown.Maximum = new decimal(12);
+            nudUpDown.Minimum = new decimal(1);
             nudUpDown.Value = Properties.Settings.Default.setPlanterArraySpeed;
-            using (var keypad = new NumericKeypad(nudUpDown.Value))
+            using (var keypad = new NumericKeypad(nudUpDown.Value, nudUpDown.Minimum, nudUpDown.Maximum))
             {
                 keypad.StartPosition = FormStartPosition.CenterParent;
                 keypad.ShowInTaskbar = false;
@@ -561,9 +573,11 @@ namespace AOGPlanterV2.OldFarmer
                 // Always return focus to numericUpDown1
                 //  NumericKeypad.Focus();
                 //     numRows.Value = (decimal)numberOfRows;
-                Properties.Settings.Default.setPlanterArraySpeed = (int)nudArraySpeed.Value;
+                mf.rc.SkipDisplayInterval = (int)nudArraySpeed.Value;
+                Properties.Settings.Default.setPlanterArraySpeed = mf.rc.SkipDisplayInterval;
                 Properties.Settings.Default.Save();
                 btnSavePlanterSettings.Focus();
+                mf.rc.updateSkipDisplayInterval = TimeSpan.FromSeconds(mf.rc.SkipDisplayInterval);
             }
         }
 

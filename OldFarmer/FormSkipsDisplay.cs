@@ -16,8 +16,6 @@ namespace AOGPlanterV2
         private Color[,] colorBuffer;
         private int numSections;
         private DateTime lastUpdate = DateTime.MinValue;
-        private readonly TimeSpan updateInterval = TimeSpan.FromSeconds(
-            AOGPlanterV2.Properties.Settings.Default.setPlanterArraySpeed);
         int gap = 6;   // pixels between rectangles
 
         public FormSkipsDisplay(FormAOP mainForm)
@@ -140,7 +138,7 @@ namespace AOGPlanterV2
 
         private void OnChartTick(object sender, EventArgs e)
         {
-            if (DateTime.UtcNow - lastUpdate < updateInterval)
+            if (DateTime.UtcNow - lastUpdate < mf.rc.updateSkipDisplayInterval)
                 return;
 
             lastUpdate = DateTime.UtcNow;

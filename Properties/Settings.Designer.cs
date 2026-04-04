@@ -97,7 +97,7 @@ namespace AOGPlanterV2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool setMenu_isMetric {
             get {
                 return ((bool)(this["setMenu_isMetric"]));
@@ -1407,7 +1407,7 @@ namespace AOGPlanterV2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("32000")]
+        [global::System.Configuration.DefaultSettingValueAttribute("80000")]
         public float setPlanterTargetPopulation {
             get {
                 return ((float)(this["setPlanterTargetPopulation"]));
@@ -1419,7 +1419,7 @@ namespace AOGPlanterV2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("4.5")]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
         public float setPlanterSpeed {
             get {
                 return ((float)(this["setPlanterSpeed"]));
@@ -1431,7 +1431,7 @@ namespace AOGPlanterV2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("30.1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("76.2")]
         public float setPlanterRowWidth {
             get {
                 return ((float)(this["setPlanterRowWidth"]));
@@ -1515,7 +1515,7 @@ namespace AOGPlanterV2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("9")]
+        [global::System.Configuration.DefaultSettingValueAttribute("16")]
         public int setPlanterNumRows {
             get {
                 return ((int)(this["setPlanterNumRows"]));
@@ -1527,7 +1527,7 @@ namespace AOGPlanterV2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
         public int setPlanterArraySpeed {
             get {
                 return ((int)(this["setPlanterArraySpeed"]));

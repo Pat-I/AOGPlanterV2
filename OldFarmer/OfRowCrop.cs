@@ -37,6 +37,8 @@ namespace AOGPlanterV2.OF
         public float sumPopulation = 32000f;
         public DateTime timePrev;
         public DateTime timeDataReceived;
+        public TimeSpan updateSkipDisplayInterval = TimeSpan.FromSeconds(Properties.Settings.Default.setPlanterArraySpeed);
+        public int SkipDisplayInterval = 1;
         internal class SectionState
         {
             public string state { get; set; }

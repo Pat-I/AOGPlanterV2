@@ -42,7 +42,7 @@ namespace AOGPlanterV2
             public int arraySpeed = 5;
 
             // PGN
-            int crc = 0;
+            byte crc = 0;
 
             public CPGN_E9()
             {
@@ -57,7 +57,7 @@ namespace AOGPlanterV2
                 {
                     crc += pgn[i];
                 }
-                pgn[pgn.Length - 1] = (byte)crc;
+                pgn[pgn.Length - 1] = crc;
             }
         }
 
@@ -381,7 +381,7 @@ namespace AOGPlanterV2
             public int doublesFactor = 11;
             public int isMetric = 12;
             // PGN
-            int crc = 0;
+            byte crc = 0;
 
             public CPGN_E0()
             {

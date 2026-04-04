@@ -22,6 +22,7 @@ namespace AOGPlanterV2
 
         private void DrawChart()
         {
+            skipChart.Titles[0].Text = $"Skips & Doubles - {mf.rc.SkipDisplayInterval:F0} second look";
             Series s = skipChart.Series["Skips"];
             Series d = skipChart.Series["Doubles"];
             s.Points.Clear();
@@ -61,7 +62,7 @@ namespace AOGPlanterV2
 
         private void FormSkipChart_Load(object sender, EventArgs e)
         {
-            timer1.Interval = 3000;
+            timer3.Interval = 200;
             //			timer1.Interval = (int)((1 / (double)mf.fixUpdateHz) * 1000);
             if (Properties.Settings.Default.setPlanterAlarm_Active == true)
             {
@@ -75,6 +76,7 @@ namespace AOGPlanterV2
                 btnAlarm.ForeColor = SystemColors.ControlText;
                 btnAlarm.Text = "Alarm Off";
             }
+            mf.rc.SkipDisplayInterval = Properties.Settings.Default.setPlanterArraySpeed;
         }
         private void btnSkipExit(object sender, EventArgs e)
         {
@@ -94,6 +96,7 @@ namespace AOGPlanterV2
                 btnAlarm.Text = "Alarm Off";
                 btnAlarm.BackColor = System.Drawing.Color.Red;
                 btnAlarm.ForeColor = SystemColors.ControlText;
+                Properties.Settings.Default.Save();
             }
             else
             {
@@ -101,6 +104,7 @@ namespace AOGPlanterV2
                 btnAlarm.Text = "Alarm On";
                 btnAlarm.BackColor = System.Drawing.Color.Green;
                 btnAlarm.ForeColor = SystemColors.ButtonFace;
+                Properties.Settings.Default.Save();
             }
         }
     }

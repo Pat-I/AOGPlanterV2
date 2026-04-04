@@ -34,7 +34,7 @@ namespace AOGPlanterV2
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Title title1 = new System.Windows.Forms.DataVisualization.Charting.Title();
-            timer1 = new System.Windows.Forms.Timer(components);
+            timer3 = new System.Windows.Forms.Timer(components);
             skipChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             btnExitSC = new Button();
             btnAlarm = new Button();
@@ -45,9 +45,9 @@ namespace AOGPlanterV2
             // 
             // timer1
             // 
-            timer1.Enabled = true;
-            timer1.Interval = 200;
-            timer1.Tick += timer1_Tick;
+            timer3.Enabled = true;
+            timer3.Interval = 200;
+            timer3.Tick += timer1_Tick;
             // 
             // skipChart
             // 
@@ -173,7 +173,7 @@ namespace AOGPlanterV2
         #endregion
 
         private System.Windows.Forms.DataVisualization.Charting.Chart skipChart;
-		private System.Windows.Forms.Timer timer1;
+		private System.Windows.Forms.Timer timer3;
 		private System.Windows.Forms.Button btnExitSC;
 		private System.Windows.Forms.Button btnAlarm;
 		private System.Windows.Forms.TextBox textBox1;

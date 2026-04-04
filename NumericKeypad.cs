@@ -7,13 +7,17 @@ namespace AOGPlanterV2
         private TextBox txtDisplay;
         private Button[] numButtons;
         private Button btnClear, btnOk, btnDot, btnBack, btnCancel;
+        private decimal minVal = 0;
+        private decimal maxVal = 255;
         public decimal Result { get; private set; }
 
-        public NumericKeypad(decimal initialValue = 0)
+        public NumericKeypad(decimal initialValue = 0, decimal minValue = 0, decimal maxValue = 255)
         {
 
             InitializeComponent();
             txtDisplay.Text = initialValue.ToString("0.##"); // Display the current value
+            minVal  = minValue;
+            maxVal = maxValue;
         }
 
         private void InitializeComponent()
@@ -181,7 +185,10 @@ namespace AOGPlanterV2
         {
             if (decimal.TryParse(txtDisplay.Text, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture, out decimal val))
             {
-                Result = Math.Round(val, 2);
+                decimal tempValue = Math.Round(val, 2);
+                if (tempValue < minVal) tempValue = minVal;
+                if (tempValue > maxVal) tempValue = maxVal;
+                Result = tempValue;
                 DialogResult = DialogResult.OK;
                 Close();
             }

@@ -21,7 +21,7 @@
       <Value Profile="(Default)">1</Value>
     </Setting>
     <Setting Name="setMenu_isMetric" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">False</Value>
+      <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="setMenu_isGridOn" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -348,13 +348,13 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="setPlanterTargetPopulation" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">32000</Value>
+      <Value Profile="(Default)">80000</Value>
     </Setting>
     <Setting Name="setPlanterSpeed" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">4.5</Value>
+      <Value Profile="(Default)">8</Value>
     </Setting>
     <Setting Name="setPlanterRowWidth" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">30.1</Value>
+      <Value Profile="(Default)">76.2</Value>
     </Setting>
     <Setting Name="setPlanter_Active" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
@@ -375,10 +375,10 @@
       <Value Profile="(Default)">16</Value>
     </Setting>
     <Setting Name="setPlanterNumRows" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">9</Value>
+      <Value Profile="(Default)">16</Value>
     </Setting>
     <Setting Name="setPlanterArraySpeed" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">1</Value>
+      <Value Profile="(Default)">3</Value>
     </Setting>
     <Setting Name="setAsLoopback" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>

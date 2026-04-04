@@ -428,15 +428,17 @@ namespace AOGPlanterV2.OldFarmer
             // btnNetwork
             // 
             btnNetwork.BackColor = Color.ForestGreen;
+            btnNetwork.Enabled = false;
             btnNetwork.Font = new Font("Microsoft Sans Serif", 15.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
             btnNetwork.ForeColor = SystemColors.ButtonFace;
-            btnNetwork.Location = new Point(493, 242);
+            btnNetwork.Location = new Point(2, 2);
             btnNetwork.Margin = new Padding(4, 3, 4, 3);
             btnNetwork.Name = "btnNetwork";
-            btnNetwork.Size = new Size(175, 47);
+            btnNetwork.Size = new Size(175, 36);
             btnNetwork.TabIndex = 518;
             btnNetwork.Text = "Loopback";
             btnNetwork.UseVisualStyleBackColor = false;
+            btnNetwork.Visible = false;
             btnNetwork.Click += btnNetwork_Click;
             // 
             // label6
