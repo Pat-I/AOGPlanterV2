@@ -305,7 +305,6 @@ namespace AOGPlanterV2
         }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            txtUpTime.Text = DateTime.Now.ToString("hh:mm:ss");
             if (Properties.Settings.Default.setMenu_isMetric)
             {
                 lblPopulation.Text = rc.sumPopulation.ToString("F0");
