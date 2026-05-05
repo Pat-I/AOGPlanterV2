@@ -531,6 +531,28 @@ namespace AOGPlanterV2
                         }
                         switch (data[3])
                         {
+                        //// Singulation by row//// USED by Pat's INO
+                        case 205:
+                            {
+                                int popIndex = 7;
+                                for (int i = 5; i < 13; i++)
+                                {
+                                    popIndex += 1;
+                                    mf.rc.rcSingulationPercent[popIndex] = data[i];
+                                }
+                                break;
+                            }
+                        //// PSingulation by row//// USED by Pat's INO
+                        case 204:
+                            {
+                                int popIndex = -1;
+                                for (int i = 5; i < 13; i++)
+                                {
+                                    popIndex += 1;
+                                    mf.rc.rcSingulationPercent[popIndex] = data[i];
+                                }
+                                break;
+                            }
                         //// Population by row by spacing//// USED by Pat's INO
                         case 202:
                             {
@@ -538,9 +560,6 @@ namespace AOGPlanterV2
                                 for (int i = 5; i < 13; i++)
                                 {
                                     popIndex += 1;
-                                    //	if (data[i] < 0) data[i] = 250;  // occurs with overflow situation
-                                    //	rc.rcPopulationPercent[popIndex] = (data[i] * 100000f / (float.Parse(Properties.Settings.Default.setPlanterTargetPopulation))) - 100f;
-                                    //mf.rc.rcPopulation[popIndex] = data[i] * 1000f;
                                     if (data[i] > 0 && mf.rc.fbRowWidth > 0.1f)
                                         mf.rc.rcPopulation[popIndex] = 1000000000f / (data[i] * mf.rc.fbRowWidth); // row width in cm
                                     else mf.rc.rcPopulation[popIndex] = 0f;
@@ -559,8 +578,6 @@ namespace AOGPlanterV2
                                 for (int i = 5; i < 13; i++)
                                 {
                                     popIndex += 1;
-                                    //	if (data[i] < 0) data[i] = 250;  // occurs with overflow situation
-                                    //mf.rc.rcPopulation[popIndex] = data[i] * 1000f;
                                     if (data[i] > 0 && mf.rc.fbRowWidth > 0.1f)
                                         mf.rc.rcPopulation[popIndex] = 1000000000f / (data[i] * mf.rc.fbRowWidth); // row width in cm
                                     else mf.rc.rcPopulation[popIndex] = 0f;

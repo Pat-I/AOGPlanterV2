@@ -64,7 +64,7 @@ namespace AOGPlanterV2.OldFarmer
         {
             Close();
 
-            Form formJ = new OldFarmer.PopulationChart2(mf);
+            Form formJ = new OldFarmer.FormSingulationChart(mf);
             formJ.Show(mf);
         }
     }
