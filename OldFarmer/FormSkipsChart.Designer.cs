@@ -43,7 +43,7 @@ namespace AOGPlanterV2
             ((System.ComponentModel.ISupportInitialize)skipChart).BeginInit();
             SuspendLayout();
             // 
-            // timer1
+            // timer3
             // 
             timer3.Enabled = true;
             timer3.Interval = 200;
@@ -94,7 +94,6 @@ namespace AOGPlanterV2
             title1.Name = "Title1";
             title1.Text = "Skips & Doubles - 3 second look";
             skipChart.Titles.Add(title1);
-//            skipChart.Click += skipChart_Click;
             // 
             // btnExitSC
             // 
@@ -158,7 +157,7 @@ namespace AOGPlanterV2
             Controls.Add(btnAlarm);
             Controls.Add(btnExitSC);
             Controls.Add(skipChart);
-            Location = new Point(1400, 120);
+            Location = new Point(1200, 120);
             Margin = new Padding(3, 4, 3, 4);
             Name = "FormSkipsChart";
             StartPosition = FormStartPosition.Manual;

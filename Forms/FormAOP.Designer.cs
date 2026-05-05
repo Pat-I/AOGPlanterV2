@@ -51,7 +51,7 @@
             lblPopulation.BackColor = Color.Yellow;
             lblPopulation.Font = new Font("Tahoma", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblPopulation.ForeColor = SystemColors.ActiveCaptionText;
-            lblPopulation.Location = new Point(1250, 50);
+            lblPopulation.Location = new Point(1300, 50);
             lblPopulation.Margin = new Padding(0);
             lblPopulation.Name = "lblPopulation";
             lblPopulation.Size = new Size(150, 45);
@@ -66,7 +66,7 @@
             txtPopulation.BackColor = Color.WhiteSmoke;
             txtPopulation.Font = new Font("Tahoma", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtPopulation.ForeColor = SystemColors.ActiveCaptionText;
-            txtPopulation.Location = new Point(1250, 95);
+            txtPopulation.Location = new Point(1300, 95);
             txtPopulation.Margin = new Padding(4, 0, 4, 0);
             txtPopulation.Name = "txtPopulation";
             txtPopulation.Size = new Size(150, 25);
@@ -79,13 +79,13 @@
             // 
             lblSingulation.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblSingulation.BackColor = Color.WhiteSmoke;
-            lblSingulation.Font = new Font("Tahoma", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSingulation.Font = new Font("Tahoma", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSingulation.ForeColor = SystemColors.ActiveCaptionText;
-            lblSingulation.Location = new Point(1400, 50);
+            lblSingulation.Location = new Point(1450, 50);
             lblSingulation.Margin = new Padding(4, 0, 4, 0);
             lblSingulation.Name = "lblSingulation";
             lblSingulation.Padding = new Padding(0, 0, 6, 0);
-            lblSingulation.Size = new Size(125, 45);
+            lblSingulation.Size = new Size(110, 45);
             lblSingulation.TabIndex = 2;
             lblSingulation.Text = "100%";
             lblSingulation.TextAlign = ContentAlignment.MiddleCenter;
@@ -94,12 +94,12 @@
             // 
             txtSingulation.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             txtSingulation.BackColor = Color.WhiteSmoke;
-            txtSingulation.Font = new Font("Tahoma", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            txtSingulation.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtSingulation.ForeColor = SystemColors.ActiveCaptionText;
-            txtSingulation.Location = new Point(1400, 95);
+            txtSingulation.Location = new Point(1450, 95);
             txtSingulation.Margin = new Padding(4, 0, 4, 0);
             txtSingulation.Name = "txtSingulation";
-            txtSingulation.Size = new Size(125, 25);
+            txtSingulation.Size = new Size(110, 25);
             txtSingulation.TabIndex = 3;
             txtSingulation.Text = "Singulation";
             txtSingulation.TextAlign = ContentAlignment.MiddleCenter;
@@ -109,13 +109,13 @@
             // 
             lblSkipPercent.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblSkipPercent.BackColor = Color.WhiteSmoke;
-            lblSkipPercent.Font = new Font("Tahoma", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblSkipPercent.Font = new Font("Tahoma", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblSkipPercent.ForeColor = SystemColors.ActiveCaptionText;
-            lblSkipPercent.Location = new Point(1525, 50);
+            lblSkipPercent.Location = new Point(1560, 50);
             lblSkipPercent.Margin = new Padding(4, 0, 4, 0);
             lblSkipPercent.Name = "lblSkipPercent";
             lblSkipPercent.Padding = new Padding(0, 0, 6, 0);
-            lblSkipPercent.Size = new Size(125, 45);
+            lblSkipPercent.Size = new Size(110, 45);
             lblSkipPercent.TabIndex = 4;
             lblSkipPercent.Text = "10.1%";
             lblSkipPercent.TextAlign = ContentAlignment.MiddleCenter;
@@ -126,10 +126,10 @@
             txtSkips.BackColor = Color.Yellow;
             txtSkips.Font = new Font("Tahoma", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtSkips.ForeColor = SystemColors.ActiveCaptionText;
-            txtSkips.Location = new Point(1525, 95);
+            txtSkips.Location = new Point(1560, 95);
             txtSkips.Margin = new Padding(4, 0, 4, 0);
             txtSkips.Name = "txtSkips";
-            txtSkips.Size = new Size(125, 25);
+            txtSkips.Size = new Size(110, 25);
             txtSkips.TabIndex = 5;
             txtSkips.Text = "Skips";
             txtSkips.TextAlign = ContentAlignment.MiddleCenter;
@@ -138,13 +138,13 @@
             // 
             lblDoublesPercent.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             lblDoublesPercent.BackColor = Color.WhiteSmoke;
-            lblDoublesPercent.Font = new Font("Tahoma", 20.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDoublesPercent.Font = new Font("Tahoma", 18F, FontStyle.Bold, GraphicsUnit.Point, 0);
             lblDoublesPercent.ForeColor = SystemColors.ActiveCaptionText;
-            lblDoublesPercent.Location = new Point(1650, 50);
+            lblDoublesPercent.Location = new Point(1670, 50);
             lblDoublesPercent.Margin = new Padding(4, 0, 4, 0);
             lblDoublesPercent.Name = "lblDoublesPercent";
             lblDoublesPercent.Padding = new Padding(0, 0, 6, 0);
-            lblDoublesPercent.Size = new Size(125, 45);
+            lblDoublesPercent.Size = new Size(110, 45);
             lblDoublesPercent.TabIndex = 6;
             lblDoublesPercent.Text = "10.1%";
             lblDoublesPercent.TextAlign = ContentAlignment.MiddleCenter;
@@ -155,10 +155,10 @@
             txtDoubles.BackColor = Color.MediumPurple;
             txtDoubles.Font = new Font("Tahoma", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
             txtDoubles.ForeColor = SystemColors.ActiveCaptionText;
-            txtDoubles.Location = new Point(1650, 95);
+            txtDoubles.Location = new Point(1670, 95);
             txtDoubles.Margin = new Padding(4, 0, 4, 0);
             txtDoubles.Name = "txtDoubles";
-            txtDoubles.Size = new Size(125, 25);
+            txtDoubles.Size = new Size(110, 25);
             txtDoubles.TabIndex = 7;
             txtDoubles.Text = "Doubles";
             txtDoubles.TextAlign = ContentAlignment.MiddleCenter;

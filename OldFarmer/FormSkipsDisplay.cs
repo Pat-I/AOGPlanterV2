@@ -46,11 +46,11 @@ namespace AOGPlanterV2
 
             Bounds = Screen.PrimaryScreen.Bounds;
             var screen = Screen.PrimaryScreen.WorkingArea;
-            int rectHeight = screen.Height / 48;   // same value used in OnPaint
+            int rectHeight = screen.Height / 72;   // same value used in OnPaint
             int totalRowsHeight = HistoryRows * rectHeight;
             Height = totalRowsHeight + 10; // small padding
             Width = (int)(screen.Width / 1.45f);
-            int y = screen.Bottom - Height - (screen.Height / 12);
+            int y = screen.Bottom - Height - (screen.Height / 8);
             Location = new Point((int)(screen.Width / 6.6f), y);
             Size = new Size(Width, Height);
         }
