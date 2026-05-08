@@ -32,7 +32,7 @@ namespace AOGPlanterV2.OldFarmer
             }
             if (mf.tool.numOfSections > 0) SingulationAverage /= mf.tool.numOfSections;
 
-            lblGraphSing.Text = SingulationAverage.ToString("0.0") + "%";
+            lblGraphSing.Text = SingulationAverage.ToString("F1") + "%";
 
             var chartArea = singchart.ChartAreas[0];
 

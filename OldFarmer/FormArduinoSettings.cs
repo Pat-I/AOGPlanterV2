@@ -17,9 +17,9 @@ namespace AOGPlanterV2.OldFarmer
         /// ///
         //		private readonly Form1 mf = null;
         private FormAOP mf = null;
-        public FormArduinoSettings(Form callingForm)
+        public FormArduinoSettings(FormAOP callingForm)
         {
-            mf = callingForm as FormAOP;
+            mf = callingForm;
             udp = mf.udp;
             InitializeComponent();
             nudUpDown = new NumericUpDown();
@@ -161,7 +161,7 @@ namespace AOGPlanterV2.OldFarmer
             {
                 nudUpDown.Maximum = new decimal(518920);
                 nudUpDown.Minimum = new decimal(2500);
-                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation;             
+                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation;
             }
             else
             {
@@ -170,7 +170,7 @@ namespace AOGPlanterV2.OldFarmer
                 nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterTargetPopulation / 2.47105);
             }
             using (var keypad = new NumericKeypad(nudUpDown.Value, nudUpDown.Minimum, nudUpDown.Maximum))
-            {               
+            {
                 keypad.StartPosition = FormStartPosition.CenterParent;
                 keypad.ShowInTaskbar = false;
                 keypad.Owner = this;
@@ -197,7 +197,7 @@ namespace AOGPlanterV2.OldFarmer
                         if (Properties.Settings.Default.setPlanterTargetPopulation < 2500) Properties.Settings.Default.setPlanterTargetPopulation = 2500;
                         if (Properties.Settings.Default.setPlanterTargetPopulation > 518920f) Properties.Settings.Default.setPlanterTargetPopulation = 518920f;
                         nUDPopulation.Value = (decimal)(Properties.Settings.Default.setPlanterTargetPopulation / 2.47105);
-                    }                  
+                    }
                     Properties.Settings.Default.Save();
                     btnSavePlanterSettings.Focus();
                 }
@@ -259,7 +259,7 @@ namespace AOGPlanterV2.OldFarmer
                         if (Properties.Settings.Default.setPlanterRowWidth > 250f) Properties.Settings.Default.setPlanterRowWidth = 250f;
                         nudRowSpacing.Value = (decimal)(Properties.Settings.Default.setPlanterRowWidth / 2.54);
                     }
-                    
+
                     Properties.Settings.Default.Save();
                     btnSavePlanterSettings.Focus();
                 }
@@ -281,7 +281,7 @@ namespace AOGPlanterV2.OldFarmer
             {
                 nudUpDown.Maximum = new decimal(50);
                 nudUpDown.Minimum = new decimal(0.1);
-                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed; 
+                nudUpDown.Value = (decimal)AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed;
             }
             else
             {
@@ -289,7 +289,7 @@ namespace AOGPlanterV2.OldFarmer
                 nudUpDown.Minimum = new decimal(0.1);
                 nudUpDown.Value = (decimal)(AOGPlanterV2.Properties.Settings.Default.setPlanterSpeed * 0.621371f);
             }
-                
+
             using (var keypad = new NumericKeypad(nudUpDown.Value, nudUpDown.Minimum, nudUpDown.Maximum))
             {
                 keypad.StartPosition = FormStartPosition.CenterParent;
@@ -319,7 +319,7 @@ namespace AOGPlanterV2.OldFarmer
                         if (Properties.Settings.Default.setPlanterSpeed > 49f) Properties.Settings.Default.setPlanterSpeed = 49f;
                         nudPlantingSpeed.Value = (decimal)(Properties.Settings.Default.setPlanterSpeed * 0.621371f);
                     }
-                    
+
                     Properties.Settings.Default.Save();
                     btnSavePlanterSettings.Focus();
                 }
@@ -616,6 +616,12 @@ namespace AOGPlanterV2.OldFarmer
                 btnNetwork.Text = "Standalone";
             }
             Properties.Settings.Default.Save();
+        }
+
+        private void btnAvancedSettings_Click(object sender, EventArgs e)
+        {
+            AdvancedSettingsForm settings = new AdvancedSettingsForm(mf);
+            settings.ShowDialog(); // This freezes the main form until settings is closed
         }
     }
 }

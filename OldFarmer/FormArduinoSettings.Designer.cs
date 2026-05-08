@@ -63,6 +63,7 @@ namespace AOGPlanterV2.OldFarmer
             btnMetric = new Button();
             btnNetwork = new Button();
             label6 = new Label();
+            btnAvancedSettings = new Button();
             ((System.ComponentModel.ISupportInitialize)nUDPopulation).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudRowSpacing).BeginInit();
             ((System.ComponentModel.ISupportInitialize)nudPlantingSpeed).BeginInit();
@@ -453,12 +454,23 @@ namespace AOGPlanterV2.OldFarmer
             label6.TabIndex = 519;
             label6.Text = "Network(restart needed)";
             // 
+            // btnAvancedSettings
+            // 
+            btnAvancedSettings.Location = new Point(551, 289);
+            btnAvancedSettings.Name = "btnAvancedSettings";
+            btnAvancedSettings.Size = new Size(83, 23);
+            btnAvancedSettings.TabIndex = 520;
+            btnAvancedSettings.Text = "adv settings";
+            btnAvancedSettings.UseVisualStyleBackColor = true;
+            btnAvancedSettings.Click += btnAvancedSettings_Click;
+            // 
             // FormArduinoSettings
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(50, 50, 70);
             ClientSize = new Size(684, 471);
+            Controls.Add(btnAvancedSettings);
             Controls.Add(label6);
             Controls.Add(btnNetwork);
             Controls.Add(btnMetric);
@@ -534,5 +546,6 @@ namespace AOGPlanterV2.OldFarmer
         private Button btnMetric;
         private Button btnNetwork;
         private Label label6;
+        private Button btnAvancedSettings;
     }
 }

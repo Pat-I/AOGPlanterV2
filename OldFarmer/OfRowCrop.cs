@@ -25,6 +25,10 @@ namespace AOGPlanterV2.OF
         public float[] rcPopulation = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public float[] rcPopulationPercent = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public float[] rcSingulationPercent = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+        public int fertilizerWeight = 0;
+        public byte fertilizerActualPosition = 0;
+        public byte fertilizerSetPosition = 0;
+        public byte fertilizerForcedPosition = 0;
         public int fbNumSections = 0;
         public float fbRowWidth = 0.0f;
         public float fbTargetSpeed = 0.0f;
@@ -74,70 +78,5 @@ namespace AOGPlanterV2.OF
         }
         #endregion
 
-        #region Color Control
-        public bool HasChanged(int section)
-        {
-            // something changed so force a repaint
-            if (sectionState[section].changed)
-            {
-                sectionState[section].changed = false;
-                return true;
-            }
-            else
-                return false;
-        }
-        public bool IsNormal()
-        {
-            for (int j = 0; j < mf.tool.numOfSections; j++)
-                if (!IsNormal(j))
-                    return false;
-
-            return true;
-        }
-        public bool IsNormal(int section)
-        {
-            var currentState = sectionState[section].GetCurrentState();
-            if (currentState == Normal)
-                return true;
-            else
-                return false;
-
-        }
-        //public vec3 GetColor(int section)
-        //{
-        //	if (!IsNormal(section))
-        //		return conditionLookup[sectionState[section].GetState()];
-        //	else if (!mf.tool.isMultiColoredSections)
-        //		return new vec3(mf.sectionColorDay.R, mf.sectionColorDay.G, mf.sectionColorDay.B);
-        //	else
-        //		return new vec3(mf.tool.secColors[section].R, mf.tool.secColors[section].G, mf.tool.secColors[section].B);
-        //}
-
-        public void SetStateSkip(int section)
-        {
-            //if (sectionState.ContainsKey(section)) sectionState[section].ChangeState("skip");
-            sectionState[section].ChangeState("skip");
-        }
-        public void SetStateDouble(int section)
-        {
-            sectionState[section].ChangeState("double");
-        }
-        public void SetStateOut(int section)
-        {
-            sectionState[section].ChangeState("out");
-        }
-        public void SetStateNormal(int section)
-        {
-            sectionState[section].ChangeState(Normal);
-        }
-        public bool HasStateChanged(int section)
-        {
-            return sectionState[section].HasStateChanged();
-        }
-        public string GetCurrentState(int section)
-        {
-            return sectionState[section].GetCurrentState();
-        }
-        #endregion
     }
 }

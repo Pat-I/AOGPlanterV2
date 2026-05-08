@@ -55,59 +55,6 @@ namespace AOGPlanterV2
             Size = new Size(Width, Height);
         }
 
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            base.OnPaint(e);
-
-            if (mf?.rc == null) return;
-
-            Graphics g = e.Graphics;
-
-            int screenW = (int)(ClientSize.Width * 0.95f); // was /2
-            int screenH = ClientSize.Height;
-            int xOffset = (int)((ClientSize.Width - screenW) / 1.0f); // .99f
-
-            int baseY = screenH - (screenH); // was / 4
-            int rectHeight = screenH / 10;
-            //            int rectWidth = screenW / numOfSections;
-            int totalGapWidth = gap * (numSections - 1);
-            int rectWidth = (screenW - totalGapWidth) / numOfSections;
-
-            for (int r = 0; r < HistoryRows; r++)
-            {
-                int y = baseY + (r * rectHeight);
-
-                for (int c = 0; c < numOfSections; c++)
-                {
-                    using var brush = new SolidBrush(colorBuffer[r, c]);
-
-                    Rectangle rect = new Rectangle(
-                       xOffset + (c * rectWidth + gap),
-                        y,
-                        rectWidth - 2 - gap,
-                        rectHeight - 4);
-
-                    g.FillRectangle(brush, rect);
-
-                    // Only number the top row
-                    if (r == 0)
-                    {
-                        using var font = new Font("Segoe UI", 9, FontStyle.Bold);
-                        using var textBrush = new SolidBrush(Color.Black);
-
-                        string text = (c + 1).ToString();
-                        SizeF size = g.MeasureString(text, font);
-
-                        g.DrawString(
-                            text,
-                            font,
-                            textBrush,
-                            rect.X + (rect.Width - size.Width) / 2,
-                            rect.Y + (rect.Height - size.Height) / 2);
-                    }
-                }
-            }
-        }
         private void InitializeComponent()
         {
             btnExitRows = new Button();
@@ -148,11 +95,6 @@ namespace AOGPlanterV2
             Invalidate();
         }
 
-        protected override void OnFormClosing(FormClosingEventArgs e)
-        {
-            mf.skp.TickSync -= OnChartTick;
-            base.OnFormClosing(e);
-        }
         private void ShiftRowsDown()
         {
             for (int r = HistoryRows - 1; r > 0; r--)

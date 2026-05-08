@@ -409,19 +409,55 @@ namespace AOGPlanterV2
             {
             }
         }
-        public void UpdateLabel(string text)
+        //*********************************************
+        //fertilizer config
+        public class CPGN_A7
         {
-            if (udp.mf.InvokeRequired)
-            {
-                udp.mf.Invoke((MethodInvoker)(() => udp.mf.txtSkips.Text = text));
+            /// <Arduino config>
+            /// PGN - 167 - A7
+            /// Summary
+            public byte[] pgn = new byte[] { 0x80, 0x81, 0x7b, 0xA7, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0xCC };
 
-            }
-            else
+
+            //where in the pgn is data
+            public byte[] rcConfig = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            public byte fertilizerZeroHi = 5;
+            public byte fertilizerZeroLo = 6;
+            public byte fertilizerWeightHi = 7;
+            public byte fertilizerWeightLo = 8;
+            public byte fertilizerForceOn1 = 9;
+            public byte fertilizerForceOn2 = 10;
+            public byte reserve6 = 11;
+            public byte reserve7 = 12;
+            // PGN
+            byte crc = 0;
+
+            public CPGN_A7()
             {
-                udp.mf.txtPopulation.Text = text;
+                pgn[fertilizerZeroHi] = 0x7F;
+                pgn[fertilizerZeroLo] = 0xFF;
+                pgn[fertilizerWeightHi] = 0xFF;
+                pgn[fertilizerWeightLo] = 0xFF;
+                pgn[fertilizerForceOn1] = 0;
+                pgn[fertilizerForceOn2] = 0;
+                pgn[reserve6] = 0;
+                pgn[reserve7] = 0;
+            }
+
+            public void MakeCRC()
+            {
+                crc = 0;
+                for (int i = 2; i < pgn.Length - 1; i++)
+                {
+                    crc += pgn[i];
+                }
+                pgn[pgn.Length - 1] = (byte)crc;
+            }
+
+            public void Reset()
+            {
             }
         }
-
 
         //*********************************************
         //pgn instances
@@ -470,6 +506,10 @@ namespace AOGPlanterV2
         /// rowCropConfig PGN - 228 - E0
         /// </summary>
         public CPGN_E0 p_224 = new CPGN_E0();
+        /// <summary>
+        /// rowCropConfig PGN - 167 - A7
+        /// </summary>
+        public CPGN_A7 p_167 = new CPGN_A7();
 
         public void StartUDPServer()
         {
@@ -531,6 +571,15 @@ namespace AOGPlanterV2
                         }
                         switch (data[3])
                         {
+                        ////fertilizer
+                        case 166:
+                            {
+                                mf.rc.fertilizerWeight = ((data[5] << 8) + data[6]);
+                                mf.rc.fertilizerActualPosition = data[7];
+                                mf.rc.fertilizerSetPosition = data[9];
+                                mf.rc.fertilizerForcedPosition = data[11];
+                                break;
+                            }
                         //// Singulation by row//// USED by Pat's INO
                         case 205:
                             {
@@ -802,6 +851,37 @@ namespace AOGPlanterV2
             //}
         }
         //    }
+
+        public void SendFertilizerConfig(byte force = 0, Int16 zero = Int16.MaxValue, UInt16 weight = UInt16.MaxValue)
+        {
+            if (zero < 32000)
+            {
+                p_167.pgn[p_167.fertilizerZeroHi] = (byte)(zero >> 8);
+                p_167.pgn[p_167.fertilizerZeroLo] = (byte)(zero & 0xFF);
+            }
+            else
+            {
+                p_167.pgn[p_167.fertilizerZeroHi] = 0x7F;
+                p_167.pgn[p_167.fertilizerZeroLo] = 0xFF;
+            }
+            if (weight < 32000)
+            {
+                p_167.pgn[p_167.fertilizerWeightHi] = (byte)(weight >> 8);
+                p_167.pgn[p_167.fertilizerWeightLo] = (byte)(weight & 0xFF);
+            }
+            else
+            {
+                p_167.pgn[p_167.fertilizerWeightHi] = 0xFF;
+                p_167.pgn[p_167.fertilizerWeightLo] = 0xFF;
+            }
+            p_167.pgn[p_167.fertilizerForceOn1] = force;
+            p_167.pgn[p_167.fertilizerForceOn2] = 0;
+            p_167.pgn[p_167.reserve6] = 0;
+            p_167.pgn[p_167.reserve7] = 0;
+
+            p_167.MakeCRC();
+            SendPgnToLoop(p_167.pgn);
+        }
         public void SendPgnToLoop(byte[] byteData)
         {
             //UdpClient client = new UdpClient();

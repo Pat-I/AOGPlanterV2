@@ -1,7 +1,9 @@
 ﻿using AOGPlanterV2.OF;
 using AOGPlanterV2.OldFarmer;
-using System.Timers;
 using System.Media;
+using System.Timers;
+using System.Windows.Forms;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AOGPlanterV2
 {
@@ -74,6 +76,20 @@ namespace AOGPlanterV2
 
             SetupTimer();
             rc.InitSectionState();
+            FlowLayoutPanel1_Center();
+
+        }
+
+        private void FlowLayoutPanel1_Center()
+        {
+            // Calculate center: (Form Width / 2) - (Panel Width / 2)
+            int x = (this.ClientSize.Width - flowLayoutPanel1.Width) / 2;
+
+            // Set Y based on a fixed distance from the bottom
+            int distanceFromBottom = 100;
+            int y = this.ClientSize.Height - flowLayoutPanel1.Height - distanceFromBottom;
+
+            flowLayoutPanel1.Location = new Point(x, y);
         }
 
         //Current directory of Tools
@@ -92,15 +108,6 @@ namespace AOGPlanterV2
         public CTool tool;
         private System.Timers.Timer timerSim;
 
-        public void UpdatePopulation(string text)
-        {
-            if (InvokeRequired)
-                Invoke((System.Windows.Forms.MethodInvoker)(() => txtPopulation.Text = text));
-            else
-                txtPopulation.Text = text;
-        }
-
-
         private void SetupTimer()
         {
             // Create and configure timer
@@ -109,108 +116,6 @@ namespace AOGPlanterV2
             timerSim.Elapsed += TimerSim_Elapsed;
             timerSim.AutoReset = true; // keeps repeating
             timerSim.Start(); // start automatically
-        }
-
-        // Generates a random number within a range.       
-        //public double RandomNumber(double min, double max)
-        //{
-        //    return min + _random.NextDouble() * (max - min);
-        //}
-
-        //private readonly Random _random = new Random();
-        public void UpdateSkipPercent(string value)
-        {
-
-            // Row Crop Planter Data
-            lblSkipPercent.Text = value;
-            //                       rc.rowSkip = 1;
-
-
-        }
-        public void UpdateDoublePercent(string value)
-        {
-
-            // Row Crop Planter Data
-            lblDoublesPercent.Text = value;
-            //            rc.rowSkip = 1;
-
-
-        }
-
-        private void Population_Click(object sender, EventArgs e)
-        {
-            //check if window already exists
-            ShowSkipsDisplay();
-            /*
-            Form fcg = Application.OpenForms["FormSkipsChart"];
-            Form fch = Application.OpenForms["FormPopChart"];
-//            Form fcj = Application.OpenForms["FormSkipsDisplay"];
-            if (fcg != null)
-            {
-                fcg.Focus();
-                return;
-            }
-            if (fch != null)
-            {
-                fch.Focus();
-                return;
-            }
-            //if (fcj != null)
-            //{
-            //    fcj.Focus();
-            //    return;
-            //}
-            Form formH = new FormSkipsChart(this);
-            Form formG = new OldFarmer.FormPopChart(this);
-//            Form formJ = new FormSkipsDisplay(this);
-            formH.Show(this);
-//          formJ.Show(this);
-            formG.Show(this);
-            */
-        }
-
-        private void lblPopulation_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblSkipPercent_Click(object sender, EventArgs e)
-        {
-
-        }
-        public bool KeypadToNUD(NumericUpDown sender, Form owner)
-        {
-            sender.BackColor = Color.Red;
-            sender.Value = Math.Round(sender.Value, sender.DecimalPlaces);
-
-            using (FormNumeric form = new FormNumeric((double)sender.Minimum, (double)sender.Maximum, (double)sender.Value))
-            {
-                DialogResult result = form.ShowDialog(owner);
-                if (result == DialogResult.OK)
-                {
-                    sender.Value = (decimal)form.ReturnValue;
-                    sender.BackColor = Color.AliceBlue;
-                    return true;
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    sender.BackColor = Color.AliceBlue;
-                }
-                return false;
-            }
-        }
-
-        public void KeyboardToText(TextBox sender, Form owner)
-        {
-            sender.BackColor = Color.Red;
-            using (FormKeyboard form = new FormKeyboard(sender.Text))
-            {
-                if (form.ShowDialog(owner) == DialogResult.OK)
-                {
-                    sender.Text = form.ReturnString;
-                }
-            }
-            sender.BackColor = Color.AliceBlue;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -228,8 +133,9 @@ namespace AOGPlanterV2
             if (fcg != null)
             {
                 fcg.Focus();
-//                return;
-            } else
+                //                return;
+            }
+            else
             {
                 Form formH = new FormSkipsChart(this);
                 formH.Show(this);
@@ -237,8 +143,9 @@ namespace AOGPlanterV2
             if (fch != null)
             {
                 fch.Focus();
-//                return;
-            } else
+                //                return;
+            }
+            else
             {
                 Form formG = new OldFarmer.FormPopChart(this);
                 formG.Show(this);
@@ -247,7 +154,8 @@ namespace AOGPlanterV2
             {
                 skp.Focus();
                 return;
-            } else
+            }
+            else
             {
                 ShowSkipsDisplay();
 
@@ -299,28 +207,13 @@ namespace AOGPlanterV2
         {
 
         }
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
         private void Timer1_Tick(object sender, EventArgs e)
         {
-            if (Properties.Settings.Default.setMenu_isMetric)
-            {
-                lblPopulation.Text = rc.sumPopulation.ToString("F0");
-            }
-            else
-            {
-                lblPopulation.Text = (rc.sumPopulation * 0.404686f).ToString("F0");
-            }          
-            lblSingulation.Text = rc.sumSingulation.ToString("F1") + "%";
-            lblSkipPercent.Text = rc.sumSkipPercent.ToString("F1") + "%";
-            lblDoublesPercent.Text = rc.sumDoublePercent.ToString("F1") + "%";
-
             curTime = DateTime.Now;
             TimeSpan diff = curTime - rc.timeDataReceived;
 
-            if (diff.TotalMilliseconds > 3500) {
+            if (diff.TotalMilliseconds > 3500)
+            {
                 if (AOGPlanterV2.Properties.Settings.Default.setPlanterSimulator_Active == true)
                 {
                     lblPopulation.Text = "32000"; // rc.sumPopulation.ToString("F0");
@@ -345,22 +238,90 @@ namespace AOGPlanterV2
                     rc.rcArraySkips[kk] = 0;
                 }
                 lblDisconnected.Visible = true;
+
+                btnFertilizer1.BackColor = Color.LightGray;
+                btnFertilizer2.BackColor = Color.LightGray;
+                btnFertilizer3.BackColor = Color.LightGray;
+                btnFertilizer4.BackColor = Color.LightGray;
+                btnFertilizer5.BackColor = Color.LightGray;
+                btnFertilizer6.BackColor = Color.LightGray;
+                btnFertilizer7.BackColor = Color.LightGray;
+                btnFertilizer8.BackColor = Color.LightGray;
+                rc.fertilizerWeight = 0;
+                rc.fertilizerActualPosition = 0;
+                rc.fertilizerSetPosition = 0;
+                rc.fertilizerForcedPosition = 0;
+                lblDwPressure.Text = "- PSI";
+                lblFertilizerWeight.Text = "- Kg";
+                lblVaccum1.Text = "- in.wg";
+                lblVaccum2.Text = "- in.wg";
             }
             else
             {
+                if (Properties.Settings.Default.setMenu_isMetric)
+                {
+                    lblPopulation.Text = rc.sumPopulation.ToString("F0");
+                }
+                else
+                {
+                    lblPopulation.Text = (rc.sumPopulation * 0.404686f).ToString("F0");
+                }
+                lblSingulation.Text = rc.sumSingulation.ToString("F1") + "%";
+                lblSkipPercent.Text = rc.sumSkipPercent.ToString("F1") + "%";
+                lblDoublesPercent.Text = rc.sumDoublePercent.ToString("F1") + "%";
+                lblDwPressure.Text = "- PSI";
+                lblFertilizerWeight.Text = rc.fertilizerWeight.ToString("F0") + " Kg";
+                lblVaccum1.Text = "- in.wg";
+                lblVaccum2.Text = "- in.wg";
+
+
                 lblDisconnected.Visible = false;
+                for (int i = 0; i < 8; i++)
+                {
+                    // Find the button (i+1 because names usually start at 1)
+                    Control[] found = this.Controls.Find("btnFertilizer" + (i + 1), true);
+                    UpdateMultiByteColors(rc.fertilizerForcedPosition, rc.fertilizerSetPosition, rc.fertilizerActualPosition);
+                
+                }
+
             }
- 
+
         }
 
-        private int tickCount = 0;
-
-        private void TimerSim_Tick(object sender, EventArgs e)
+        private void UpdateMultiByteColors(byte forcedByte, byte setByte, byte actualByte)
         {
-            tickCount++;
-            txtPopulation.Text = $"Tick #{tickCount}";
-            lblPopulation.Text = AOPUDP.msgCount.ToString();
-            //   OfTestDriver.Instance.UpdateRc(this);
+            // Get all buttons from the panel in order
+            var buttons = flowLayoutPanel1.Controls.OfType<Button>().ToList();
+
+            for (int i = 0; i < 8; i++)
+            {
+                if (i >= buttons.Count) break;
+
+                // Extract bit status for this specific position
+                bool isForced = (forcedByte & (1 << i)) != 0;
+                bool isSet = (setByte & (1 << i)) != 0;
+                bool isActual = (actualByte & (1 << i)) != 0;
+
+                Color targetColor;
+
+                if (isForced)
+                {
+                    targetColor = isActual ? Color.Yellow : Color.Blue;
+                }
+                else
+                {
+                    if (isSet)
+                    {
+                        targetColor = isActual ? Color.Green : Color.Blue;
+                    }
+                    else
+                    {
+                        targetColor = isActual ? Color.Pink : Color.Red;
+                    }
+                }
+
+                buttons[i].BackColor = targetColor;
+            }
         }
 
         private void TimerSim_Elapsed(object sender, ElapsedEventArgs e)
@@ -391,6 +352,18 @@ namespace AOGPlanterV2
             }
         }
 
+        private void btnFertilizer_Click(object sender, EventArgs e)
+        {
+            byte forceByte = 0;
+            Button btn = (Button)sender;
+
+            string name = btn.Name;
+            int bitIndex = int.Parse(name.Replace("btnFertilizer", "")) - 1;
+
+            forceByte ^= (byte)(1 << bitIndex);
+
+            udp.SendFertilizerConfig(force: forceByte);
+        }
     }
 }
 
