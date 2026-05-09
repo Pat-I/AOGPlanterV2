@@ -458,6 +458,150 @@ namespace AOGPlanterV2
             {
             }
         }
+        //downpressure config
+        public class CPGN_A5
+        {
+            /// <Arduino config>
+            /// PGN - 165 - A5
+            /// Summary
+            public byte[] pgn = new byte[] { 0x80, 0x81, 0x7b, 0xA5, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0xCC };
+
+
+            //where in the pgn is data
+            public byte[] rcConfig = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            public byte actWeight = 5;
+            public byte mainTarget = 6;
+            public byte altTarget = 7;
+            public byte setByte = 8;
+            public byte airPressureHi = 9;
+            public byte airPressureLo = 10;
+            public byte actAirPressure = 11;
+            public byte statusByte = 12;
+            // PGN
+            byte crc = 0;
+
+            public CPGN_A5()
+            {
+                pgn[actWeight] = 0xFF;
+                pgn[mainTarget] = 0xFF;
+                pgn[altTarget] = 0xFF;
+                pgn[setByte] = 0x00;
+                pgn[airPressureHi] = 0xFF;
+                pgn[airPressureLo] = 0xFF;
+                pgn[actAirPressure] = 0xFF;
+                pgn[statusByte] = 0;
+            }
+
+            public void MakeCRC()
+            {
+                crc = 0;
+                for (int i = 2; i < pgn.Length - 1; i++)
+                {
+                    crc += pgn[i];
+                }
+                pgn[pgn.Length - 1] = (byte)crc;
+            }
+
+            public void Reset()
+            {
+            }
+        }
+        //vaccum config
+        public class CPGN_A3
+        {
+            /// <Arduino config>
+            /// PGN - 163 - A3
+            /// Summary
+            public byte[] pgn = new byte[] { 0x80, 0x81, 0x7b, 0xA3, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0xCC };
+
+
+            //where in the pgn is data
+            public byte[] rcConfig = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            public byte vaccum1ZeroHi = 5;
+            public byte vaccum1ZeroLo = 6;
+            public byte vaccum2ZeroHi = 7;
+            public byte vaccum2ZeroLo = 8;
+            public byte actVaccum1 = 9;
+            public byte actVaccum2 = 10;
+            public byte reserve6 = 11;
+            public byte reserve7 = 12;
+            // PGN
+            byte crc = 0;
+
+            public CPGN_A3()
+            {
+                pgn[vaccum1ZeroHi] = 0x7F;
+                pgn[vaccum1ZeroLo] = 0xFF;
+                pgn[vaccum2ZeroHi] = 0xFF;
+                pgn[vaccum2ZeroLo] = 0xFF;
+                pgn[actVaccum1] = 0xFF;
+                pgn[actVaccum2] = 0xFF;
+                pgn[reserve6] = 0;
+                pgn[reserve7] = 0;
+            }
+
+            public void MakeCRC()
+            {
+                crc = 0;
+                for (int i = 2; i < pgn.Length - 1; i++)
+                {
+                    crc += pgn[i];
+                }
+                pgn[pgn.Length - 1] = (byte)crc;
+            }
+
+            public void Reset()
+            {
+            }
+        }
+        //height config
+        public class CPGN_A1
+        {
+            /// <Arduino config>
+            /// PGN - 161 - A1
+            /// Summary
+            public byte[] pgn = new byte[] { 0x80, 0x81, 0x7b, 0xA1, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0xCC };
+
+
+            //where in the pgn is data
+            public byte[] rcConfig = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+            public byte heightZeroHi = 5;
+            public byte heightZeroLo = 6;
+            public byte heightTopHi = 7;
+            public byte heightTopLo = 8;
+            public byte onThreshold = 9;
+            public byte offThreshold = 10;
+            public byte reserve6 = 11;
+            public byte reserve7 = 12;
+            // PGN
+            byte crc = 0;
+
+            public CPGN_A1()
+            {
+                pgn[heightZeroHi] = 0x7F;
+                pgn[heightZeroLo] = 0xFF;
+                pgn[heightTopHi] = 0xFF;
+                pgn[heightTopLo] = 0xFF;
+                pgn[onThreshold] = 0xFF;
+                pgn[offThreshold] = 0xFF;
+                pgn[reserve6] = 0;
+                pgn[reserve7] = 0;
+            }
+
+            public void MakeCRC()
+            {
+                crc = 0;
+                for (int i = 2; i < pgn.Length - 1; i++)
+                {
+                    crc += pgn[i];
+                }
+                pgn[pgn.Length - 1] = (byte)crc;
+            }
+
+            public void Reset()
+            {
+            }
+        }
 
         //*********************************************
         //pgn instances
@@ -507,9 +651,21 @@ namespace AOGPlanterV2
         /// </summary>
         public CPGN_E0 p_224 = new CPGN_E0();
         /// <summary>
-        /// rowCropConfig PGN - 167 - A7
+        /// fertilizerConfig PGN - 167 - A7
         /// </summary>
         public CPGN_A7 p_167 = new CPGN_A7();
+        /// <summary>
+        /// dowmpressureConfig PGN - 167 - A7
+        /// </summary>
+        public CPGN_A5 p_165 = new CPGN_A5();
+        /// <summary>
+        /// vaccumConfig PGN - 167 - A7
+        /// </summary>
+        public CPGN_A3 p_163 = new CPGN_A3();
+        /// <summary>
+        /// heightConfig PGN - 167 - A7
+        /// </summary>
+        public CPGN_A1 p_161 = new CPGN_A1();
 
         public void StartUDPServer()
         {
@@ -571,10 +727,43 @@ namespace AOGPlanterV2
                         }
                         switch (data[3])
                         {
+                        ////height
+                        case 160:
+                            {
+                                mf.rc.heightAdc = (ushort)((data[5] << 8) + data[6]);
+                                mf.rc.heightVoltage = mf.rc.heightAdc * mf.rc.adcToVoltage;
+                                mf.rc.planterHeight = data[7];
+                                mf.rc.planterOnThreashold = data[9];
+                                mf.rc.planterOffThreashold = data[10];
+                                break;
+                            }
+                        ////vaccum
+                        case 162:
+                            {
+                                mf.rc.vaccum1Adc = (ushort)((data[5] << 8) + data[6]);
+                                mf.rc.vaccum2Adc = (ushort)((data[7] << 8) + data[8]);
+                                mf.rc.vaccum1Voltage = ((data[5] << 8) + data[6]) * mf.rc.adcToVoltage;
+                                mf.rc.vaccum2Voltage = ((data[7] << 8) + data[8]) * mf.rc.adcToVoltage;
+                                mf.rc.vaccum1inWC = (data[9] - 5) / 10.0;
+                                mf.rc.vaccum2inWC = (data[10] - 5) / 10.0;
+                                break;
+                            }
+                        ////downpressure
+                        case 164:
+                            {
+                                mf.rc.downforceKgSensor1 = (short)(data[5] - 5);
+                                mf.rc.downforceKgSensor2 = (short)(data[6] - 5);
+                                mf.rc.downforceKgSensor3 = (short)(data[7] - 5);
+                                mf.rc.airPressureAdc = (ushort)((data[9] << 8) + data[10]);
+                                mf.rc.airPressureVoltage = ((data[9] << 8) + data[10]) * mf.rc.adcToVoltage;
+                                mf.rc.airPressurePSI = (short)(data[11] - 5);
+                                mf.rc.receivingDownpressureStatus = data[12];
+                                break;
+                            }
                         ////fertilizer
                         case 166:
                             {
-                                mf.rc.fertilizerWeight = ((data[5] << 8) + data[6]);
+                                mf.rc.fertilizerWeight = (short)((data[5] << 8) + data[6]);
                                 mf.rc.fertilizerActualPosition = data[7];
                                 mf.rc.fertilizerSetPosition = data[9];
                                 mf.rc.fertilizerForcedPosition = data[11];
@@ -881,6 +1070,89 @@ namespace AOGPlanterV2
 
             p_167.MakeCRC();
             SendPgnToLoop(p_167.pgn);
+        }
+
+        public void SendDownpressureConfig(byte weight = byte.MaxValue, byte maintarget = byte.MaxValue, byte alttarget = byte.MaxValue, byte setByte = 0, ushort airPressZero = 6000, byte actAirPress = byte.MaxValue)
+        {
+            p_165.pgn[p_165.actWeight] = weight;
+            p_165.pgn[p_165.mainTarget] = maintarget;
+            p_165.pgn[p_165.altTarget] = alttarget;
+            p_165.pgn[p_165.setByte] = setByte;
+            if (airPressZero < 4096)
+            {
+                p_165.pgn[p_165.airPressureHi] = (byte)(airPressZero >> 8);
+                p_165.pgn[p_165.airPressureLo] = (byte)(airPressZero & 0xFF);
+            }
+            else
+            {
+                p_165.pgn[p_165.airPressureHi] = 0xFF;
+                p_165.pgn[p_165.airPressureLo] = 0xFF;
+            }
+            p_165.pgn[p_165.actAirPressure] = actAirPress;
+            p_165.pgn[p_165.statusByte] = mf.rc.DownpressureStatusToSend; //use a global variable
+
+            p_165.MakeCRC();
+            SendPgnToLoop(p_165.pgn);
+        }
+
+        public void SendVaccumConfig(ushort vaccum1zero = 6000, ushort vaccum2zero = 6000, byte vac1 = byte.MaxValue, byte vac2 = byte.MaxValue)
+        {
+            if (vaccum1zero < 4096)
+            {
+                p_163.pgn[p_163.vaccum1ZeroHi] = (byte)(vaccum1zero >> 8);
+                p_163.pgn[p_163.vaccum1ZeroLo] = (byte)(vaccum1zero & 0xFF);
+            }
+            else
+            {
+                p_163.pgn[p_163.vaccum1ZeroHi] = 0xFF;
+                p_163.pgn[p_163.vaccum1ZeroLo] = 0xFF;
+            }
+            if (vaccum2zero < 4096)
+            {
+                p_163.pgn[p_163.vaccum2ZeroHi] = (byte)(vaccum2zero >> 8);
+                p_163.pgn[p_163.vaccum2ZeroLo] = (byte)(vaccum2zero & 0xFF);
+            }
+            else
+            {
+                p_163.pgn[p_163.vaccum2ZeroHi] = 0xFF;
+                p_163.pgn[p_163.vaccum2ZeroLo] = 0xFF;
+            }
+            p_163.pgn[p_163.actVaccum1] = vac1;
+            p_163.pgn[p_163.actVaccum2] = vac2;
+            p_163.pgn[p_163.reserve6] = 0;
+
+            p_163.MakeCRC();
+            SendPgnToLoop(p_163.pgn);
+        }
+        public void SendHeightConfig(ushort heightZero = 6000, ushort heightTop = 6000, byte onThresh = byte.MaxValue, byte offThresh = byte.MaxValue)
+        {
+            if (heightZero < 4096)
+            {
+                p_161.pgn[p_161.heightZeroHi] = (byte)(heightZero >> 8);
+                p_161.pgn[p_161.heightZeroLo] = (byte)(heightZero & 0xFF);
+            }
+            else
+            {
+                p_161.pgn[p_161.heightZeroHi] = 0x7F;
+                p_161.pgn[p_161.heightZeroLo] = 0xFF;
+            }
+            if (heightTop < 4096)
+            {
+                p_161.pgn[p_161.heightTopHi] = (byte)(heightTop >> 8);
+                p_161.pgn[p_161.heightTopLo] = (byte)(heightTop & 0xFF);
+            }
+            else
+            {
+                p_161.pgn[p_161.heightTopHi] = 0xFF;
+                p_161.pgn[p_161.heightTopLo] = 0xFF;
+            }
+            p_161.pgn[p_161.onThreshold] = onThresh;
+            p_161.pgn[p_161.offThreshold] = offThresh;
+            p_161.pgn[p_161.reserve6] = 0;
+            p_161.pgn[p_161.reserve7] = 0;
+
+            p_161.MakeCRC();
+            SendPgnToLoop(p_161.pgn);
         }
         public void SendPgnToLoop(byte[] byteData)
         {

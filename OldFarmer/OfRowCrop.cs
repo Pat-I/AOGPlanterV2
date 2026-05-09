@@ -25,10 +25,35 @@ namespace AOGPlanterV2.OF
         public float[] rcPopulation = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public float[] rcPopulationPercent = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
         public float[] rcSingulationPercent = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-        public int fertilizerWeight = 0;
+        public short fertilizerWeight = 0;
         public byte fertilizerActualPosition = 0;
         public byte fertilizerSetPosition = 0;
         public byte fertilizerForcedPosition = 0;
+
+        public double adcToVoltage = 0.002968;
+        public double heightVoltage = 0;
+        public double vaccum1Voltage = 0;
+        public double vaccum2Voltage = 0;
+        public double airPressureVoltage = 0;
+        public ushort heightAdc = 0;
+        public ushort vaccum1Adc = 0;
+        public ushort vaccum2Adc = 0;
+        public ushort airPressureAdc = 0;
+
+        public byte planterHeight = 0;
+        public byte planterOnThreashold = 0;
+        public byte planterOffThreashold = 0;
+        public double vaccum1inWC = 0;
+        public double vaccum2inWC = 0;
+        public short airPressurePSI = 0;
+
+        public short downforceKgSensor1 = 0;
+        public short downforceKgSensor2 = 0;
+        public short downforceKgSensor3 = 0;
+
+        public byte receivingDownpressureStatus = 0; //
+        public byte DownpressureStatusToSend = 0;
+
         public int fbNumSections = 0;
         public float fbRowWidth = 0.0f;
         public float fbTargetSpeed = 0.0f;

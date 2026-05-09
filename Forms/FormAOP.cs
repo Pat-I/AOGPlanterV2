@@ -214,6 +214,7 @@ namespace AOGPlanterV2
 
             if (diff.TotalMilliseconds > 3500)
             {
+                //disconected
                 if (AOGPlanterV2.Properties.Settings.Default.setPlanterSimulator_Active == true)
                 {
                     lblPopulation.Text = "32000"; // rc.sumPopulation.ToString("F0");
@@ -255,9 +256,13 @@ namespace AOGPlanterV2
                 lblFertilizerWeight.Text = "- Kg";
                 lblVaccum1.Text = "- in.wg";
                 lblVaccum2.Text = "- in.wg";
+                lblDownforce1.Text = "-- Kg";
+                lblDownforce2.Text = "-- Kg";
+                lblDownforce3.Text = "-- Kg";
             }
             else
             {
+                //connected
                 if (Properties.Settings.Default.setMenu_isMetric)
                 {
                     lblPopulation.Text = rc.sumPopulation.ToString("F0");
@@ -269,11 +274,13 @@ namespace AOGPlanterV2
                 lblSingulation.Text = rc.sumSingulation.ToString("F1") + "%";
                 lblSkipPercent.Text = rc.sumSkipPercent.ToString("F1") + "%";
                 lblDoublesPercent.Text = rc.sumDoublePercent.ToString("F1") + "%";
-                lblDwPressure.Text = "- PSI";
+                lblDwPressure.Text = rc.airPressurePSI.ToString("F0") + " PSI";
                 lblFertilizerWeight.Text = rc.fertilizerWeight.ToString("F0") + " Kg";
-                lblVaccum1.Text = "- in.wg";
-                lblVaccum2.Text = "- in.wg";
-
+                lblVaccum1.Text = rc.vaccum1inWC.ToString("F1") + " in.wg";
+                lblVaccum2.Text = rc.vaccum2inWC.ToString("F1") + " in.wg";
+                lblDownforce1.Text = rc.downforceKgSensor1.ToString("F0") + " Kg";
+                lblDownforce2.Text = rc.downforceKgSensor2.ToString("F0") + " Kg";
+                lblDownforce3.Text = rc.downforceKgSensor3.ToString("F0") + " Kg";
 
                 lblDisconnected.Visible = false;
                 for (int i = 0; i < 8; i++)
@@ -306,17 +313,17 @@ namespace AOGPlanterV2
 
                 if (isForced)
                 {
-                    targetColor = isActual ? Color.Yellow : Color.Blue;
+                    targetColor = isActual ? Color.Yellow : Color.Pink;
                 }
                 else
                 {
                     if (isSet)
                     {
-                        targetColor = isActual ? Color.Green : Color.Blue;
+                        targetColor = isActual ? Color.Green : Color.Pink;
                     }
                     else
                     {
-                        targetColor = isActual ? Color.Pink : Color.Red;
+                        targetColor = isActual ? Color.Blue : Color.Red;
                     }
                 }
 

@@ -55,6 +55,9 @@
             lblVaccum1 = new Label();
             lblVaccum2 = new Label();
             lblDwPressure = new Label();
+            lblDownforce1 = new Label();
+            lblDownforce2 = new Label();
+            lblDownforce3 = new Label();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -384,12 +387,57 @@
             lblDwPressure.Text = "0 PSI";
             lblDwPressure.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // lblDownforce1
+            // 
+            lblDownforce1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblDownforce1.BackColor = Color.WhiteSmoke;
+            lblDownforce1.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDownforce1.ForeColor = SystemColors.ActiveCaptionText;
+            lblDownforce1.Location = new Point(1450, 145);
+            lblDownforce1.Margin = new Padding(4, 0, 4, 0);
+            lblDownforce1.Name = "lblDownforce1";
+            lblDownforce1.Size = new Size(110, 25);
+            lblDownforce1.TabIndex = 143;
+            lblDownforce1.Text = "-- Kg";
+            lblDownforce1.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblDownforce2
+            // 
+            lblDownforce2.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblDownforce2.BackColor = Color.WhiteSmoke;
+            lblDownforce2.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDownforce2.ForeColor = SystemColors.ActiveCaptionText;
+            lblDownforce2.Location = new Point(1560, 146);
+            lblDownforce2.Margin = new Padding(4, 0, 4, 0);
+            lblDownforce2.Name = "lblDownforce2";
+            lblDownforce2.Size = new Size(110, 25);
+            lblDownforce2.TabIndex = 144;
+            lblDownforce2.Text = "-- Kg";
+            lblDownforce2.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblDownforce3
+            // 
+            lblDownforce3.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            lblDownforce3.BackColor = Color.WhiteSmoke;
+            lblDownforce3.Font = new Font("Tahoma", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            lblDownforce3.ForeColor = SystemColors.ActiveCaptionText;
+            lblDownforce3.Location = new Point(1670, 146);
+            lblDownforce3.Margin = new Padding(4, 0, 4, 0);
+            lblDownforce3.Name = "lblDownforce3";
+            lblDownforce3.Size = new Size(110, 25);
+            lblDownforce3.TabIndex = 145;
+            lblDownforce3.Text = "-- Kg";
+            lblDownforce3.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // FormAOP
             // 
             AutoScaleDimensions = new SizeF(7F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1920, 1061);
+            Controls.Add(lblDownforce3);
+            Controls.Add(lblDownforce2);
+            Controls.Add(lblDownforce1);
             Controls.Add(lblDwPressure);
             Controls.Add(lblVaccum2);
             Controls.Add(lblVaccum1);
@@ -449,5 +497,8 @@
         private Label lblVaccum1;
         private Label lblVaccum2;
         private Label lblDwPressure;
+        private Label lblDownforce1;
+        private Label lblDownforce2;
+        private Label lblDownforce3;
     }
 }
