@@ -9,7 +9,7 @@ namespace AOGPlanterV2.OF
         public const string Normal = "normal";
         private FormAOP mf { get; }
         //		private Dictionary<string, vec3> conditionLookup { get; set; }
-        private Dictionary<int, SectionState> sectionState { get; set; }
+        //private Dictionary<int, SectionState> sectionState { get; set; }
         public OfRowCrop(FormAOP _f)
         {
             mf = _f;
@@ -54,6 +54,13 @@ namespace AOGPlanterV2.OF
         public byte receivingDownpressureStatus = 0; //
         public byte DownpressureStatusToSend = 0;
 
+        // Status
+        public bool isPressureRaisePressed = false;
+        public bool isPressureLowerPressed = false;
+        public bool isAutoWeight = false;
+        public bool isAutoPressure = false;
+        public bool isMainTargetUsed = false;
+
         public int fbNumSections = 0;
         public float fbRowWidth = 0.0f;
         public float fbTargetSpeed = 0.0f;
@@ -69,6 +76,18 @@ namespace AOGPlanterV2.OF
         public DateTime timeDataReceived;
         public TimeSpan updateSkipDisplayInterval = TimeSpan.FromSeconds(Properties.Settings.Default.setPlanterArraySpeed);
         public int SkipDisplayInterval = 1;
+
+        public void UpdateDownforceStatus()
+        {
+            DownpressureStatusToSend = (byte)(
+                (isPressureRaisePressed ? 1 : 0) << 0 |
+                (isPressureLowerPressed ? 1 : 0) << 1 |
+                (isAutoWeight ? 1 : 0) << 4 |
+                (isAutoPressure ? 1 : 0) << 5 |
+                (isMainTargetUsed ? 1 : 0) << 6);
+        }
+
+        /*
         internal class SectionState
         {
             public string state { get; set; }
@@ -93,7 +112,7 @@ namespace AOGPlanterV2.OF
             for (int j = 0; j < mf.tool.numOfSections + 1; j++)
                 sectionState.Add(j, new SectionState() { state = NotConnected, changed = true });
         }
-
+        */
         private void InitSkip()
         {
             //	conditionLookup = new Dictionary<string, vec3>();

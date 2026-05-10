@@ -58,6 +58,8 @@
             lblDownforce1 = new Label();
             lblDownforce2 = new Label();
             lblDownforce3 = new Label();
+            btnPressureUp = new Button();
+            btnPressureDown = new Button();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -429,12 +431,42 @@
             lblDownforce3.Text = "-- Kg";
             lblDownforce3.TextAlign = ContentAlignment.MiddleRight;
             // 
+            // btnPressureUp
+            // 
+            btnPressureUp.Image = Properties.Resources.UpArrow64;
+            btnPressureUp.Location = new Point(371, 50);
+            btnPressureUp.Name = "btnPressureUp";
+            btnPressureUp.Size = new Size(74, 66);
+            btnPressureUp.TabIndex = 146;
+            btnPressureUp.Text = "Air Pressure";
+            btnPressureUp.TextAlign = ContentAlignment.BottomCenter;
+            btnPressureUp.UseVisualStyleBackColor = true;
+            btnPressureUp.MouseDown += btnPressureUp_MouseDown;
+            btnPressureUp.MouseLeave += btnPressureUp_MouseLeave;
+            btnPressureUp.MouseUp += btnPressureUp_MouseUp;
+            // 
+            // btnPressureDown
+            // 
+            btnPressureDown.Image = Properties.Resources.DnArrow64;
+            btnPressureDown.Location = new Point(371, 134);
+            btnPressureDown.Name = "btnPressureDown";
+            btnPressureDown.Size = new Size(74, 63);
+            btnPressureDown.TabIndex = 147;
+            btnPressureDown.Text = "Air Pressure";
+            btnPressureDown.TextAlign = ContentAlignment.TopCenter;
+            btnPressureDown.UseVisualStyleBackColor = true;
+            btnPressureDown.MouseDown += btnPressureDown_MouseDown;
+            btnPressureDown.MouseLeave += btnPressureDown_MouseLeave;
+            btnPressureDown.MouseUp += btnPressureDown_MouseUp;
+            // 
             // FormAOP
             // 
             AutoScaleDimensions = new SizeF(7F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1920, 1061);
+            Controls.Add(btnPressureDown);
+            Controls.Add(btnPressureUp);
             Controls.Add(lblDownforce3);
             Controls.Add(lblDownforce2);
             Controls.Add(lblDownforce1);
@@ -500,5 +532,7 @@
         private Label lblDownforce1;
         private Label lblDownforce2;
         private Label lblDownforce3;
+        private Button btnPressureUp;
+        private Button btnPressureDown;
     }
 }

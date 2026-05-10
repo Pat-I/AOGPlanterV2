@@ -3,7 +3,6 @@ using AOGPlanterV2.OldFarmer;
 using System.Media;
 using System.Timers;
 using System.Windows.Forms;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace AOGPlanterV2
 {
@@ -75,7 +74,7 @@ namespace AOGPlanterV2
             //timerSim.Start(); // start the timer
 
             SetupTimer();
-            rc.InitSectionState();
+            //rc.InitSectionState();
             FlowLayoutPanel1_Center();
 
         }
@@ -224,10 +223,10 @@ namespace AOGPlanterV2
                 }
                 else
                 {
-                    lblPopulation.Text = "0";
-                    lblSingulation.Text = "0%";
-                    lblSkipPercent.Text = "0%";
-                    lblDoublesPercent.Text = "0%";
+                    lblPopulation.Text = "-";
+                    lblSingulation.Text = "-%";
+                    lblSkipPercent.Text = "-%";
+                    lblDoublesPercent.Text = "-%";
                 }
                 for (int kk = 0; kk < rc.fbNumSections; kk++)
                 {
@@ -239,7 +238,7 @@ namespace AOGPlanterV2
                     rc.rcArraySkips[kk] = 0;
                 }
                 lblDisconnected.Visible = true;
-
+                /* //no check for theses PNGs for now
                 btnFertilizer1.BackColor = Color.LightGray;
                 btnFertilizer2.BackColor = Color.LightGray;
                 btnFertilizer3.BackColor = Color.LightGray;
@@ -259,6 +258,7 @@ namespace AOGPlanterV2
                 lblDownforce1.Text = "-- Kg";
                 lblDownforce2.Text = "-- Kg";
                 lblDownforce3.Text = "-- Kg";
+                */
             }
             else
             {
@@ -274,25 +274,37 @@ namespace AOGPlanterV2
                 lblSingulation.Text = rc.sumSingulation.ToString("F1") + "%";
                 lblSkipPercent.Text = rc.sumSkipPercent.ToString("F1") + "%";
                 lblDoublesPercent.Text = rc.sumDoublePercent.ToString("F1") + "%";
-                lblDwPressure.Text = rc.airPressurePSI.ToString("F0") + " PSI";
-                lblFertilizerWeight.Text = rc.fertilizerWeight.ToString("F0") + " Kg";
-                lblVaccum1.Text = rc.vaccum1inWC.ToString("F1") + " in.wg";
-                lblVaccum2.Text = rc.vaccum2inWC.ToString("F1") + " in.wg";
-                lblDownforce1.Text = rc.downforceKgSensor1.ToString("F0") + " Kg";
-                lblDownforce2.Text = rc.downforceKgSensor2.ToString("F0") + " Kg";
-                lblDownforce3.Text = rc.downforceKgSensor3.ToString("F0") + " Kg";
 
                 lblDisconnected.Visible = false;
-                for (int i = 0; i < 8; i++)
-                {
-                    // Find the button (i+1 because names usually start at 1)
-                    Control[] found = this.Controls.Find("btnFertilizer" + (i + 1), true);
-                    UpdateMultiByteColors(rc.fertilizerForcedPosition, rc.fertilizerSetPosition, rc.fertilizerActualPosition);
-                
-                }
+            }
+
+            lblDwPressure.Text = rc.airPressurePSI.ToString("F0") + " PSI";
+            lblFertilizerWeight.Text = rc.fertilizerWeight.ToString("F0") + " Kg";
+            lblVaccum1.Text = rc.vaccum1inWC.ToString("F1") + " in.wg";
+            lblVaccum2.Text = rc.vaccum2inWC.ToString("F1") + " in.wg";
+            lblDownforce1.Text = rc.downforceKgSensor1.ToString("F0") + " Kg";
+            lblDownforce2.Text = rc.downforceKgSensor2.ToString("F0") + " Kg";
+            lblDownforce3.Text = rc.downforceKgSensor3.ToString("F0") + " Kg";
+
+            for (int i = 0; i < 8; i++)
+            {
+                // Find the button (i+1 because names usually start at 1)
+                Control[] found = this.Controls.Find("btnFertilizer" + (i + 1), true);
+                UpdateMultiByteColors(rc.fertilizerForcedPosition, rc.fertilizerSetPosition, rc.fertilizerActualPosition);
 
             }
 
+            //do the backcolor for the pressure arrows
+            
+
+                
+            // Check Bit 0 (Raise)
+            bool isRaiseActive = (rc.receivingDownpressureStatus & (1 << 0)) != 0;
+            btnPressureUp.BackColor = isRaiseActive ? Color.LimeGreen : Color.LightGray;
+
+            // Check Bit 1 (Lower)
+            bool isLowerActive = (rc.receivingDownpressureStatus & (1 << 1)) != 0;
+            btnPressureDown.BackColor = isLowerActive ? Color.IndianRed : Color.LightGray;
         }
 
         private void UpdateMultiByteColors(byte forcedByte, byte setByte, byte actualByte)
@@ -313,7 +325,7 @@ namespace AOGPlanterV2
 
                 if (isForced)
                 {
-                    targetColor = isActual ? Color.Yellow : Color.Pink;
+                    targetColor = isActual ? Color.Yellow : Color.MediumVioletRed;
                 }
                 else
                 {
@@ -370,6 +382,48 @@ namespace AOGPlanterV2
             forceByte ^= (byte)(1 << bitIndex);
 
             udp.SendFertilizerConfig(force: forceByte);
+        }
+
+        private void btnPressureUp_MouseDown(object sender, MouseEventArgs e)
+        {
+            rc.isPressureRaisePressed = true;
+            rc.UpdateDownforceStatus();
+            udp.SendDownpressureConfig();
+        }
+
+        private void btnPressureUp_MouseUp(object sender, MouseEventArgs e)
+        {
+            rc.isPressureRaisePressed = false;
+            rc.UpdateDownforceStatus();
+            udp.SendDownpressureConfig();
+        }
+
+        private void btnPressureUp_MouseLeave(object sender, EventArgs e)
+        {
+            rc.isPressureRaisePressed = false;
+            rc.UpdateDownforceStatus();
+            udp.SendDownpressureConfig();
+        }
+
+        private void btnPressureDown_MouseDown(object sender, MouseEventArgs e)
+        {
+            rc.isPressureLowerPressed = true;
+            rc.UpdateDownforceStatus();
+            udp.SendDownpressureConfig();
+        }
+
+        private void btnPressureDown_MouseUp(object sender, MouseEventArgs e)
+        {
+            rc.isPressureLowerPressed = false;
+            rc.UpdateDownforceStatus();
+            udp.SendDownpressureConfig();
+        }
+
+        private void btnPressureDown_MouseLeave(object sender, EventArgs e)
+        {
+            rc.isPressureLowerPressed = false;
+            rc.UpdateDownforceStatus();
+            udp.SendDownpressureConfig();
         }
     }
 }
