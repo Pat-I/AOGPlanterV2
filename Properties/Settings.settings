@@ -383,8 +383,14 @@
     <Setting Name="setAsLoopback" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
-    <Setting Name="setNext" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="setAirTargetLo" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="setAirTargetHi" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">40</Value>
+    </Setting>
+    <Setting Name="setAirTargetDB" Type="System.Double" Scope="User">
+      <Value Profile="(Default)">3</Value>
     </Setting>
   </Settings>
 </SettingsFile>

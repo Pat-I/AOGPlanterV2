@@ -756,8 +756,9 @@ namespace AOGPlanterV2
                                 mf.rc.downforceKgSensor3 = (short)(data[7] - 5);
                                 mf.rc.airPressureAdc = (ushort)((data[9] << 8) + data[10]);
                                 mf.rc.airPressureVoltage = ((data[9] << 8) + data[10]) * mf.rc.adcToVoltage;
-                                mf.rc.airPressurePSI = (short)(data[11] - 5);
+                                mf.rc.airPressurePSI = (data[11] - 5);
                                 mf.rc.receivingDownpressureStatus = data[12];
+                                mf.rc.airPressurePSIaveraged = mf.rc.airPressurePSIaveraged * 0.4 + mf.rc.airPressurePSI * 0.6;
                                 break;
                             }
                         ////fertilizer

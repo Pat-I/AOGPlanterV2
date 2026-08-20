@@ -48,6 +48,9 @@ namespace AOGPlanterV2
             lblVaccum1Voltage.Text = mf.rc.vaccum1Voltage.ToString("F2") + " V";
             lblVaccum2Voltage.Text = mf.rc.vaccum2Voltage.ToString("F2") + " V";
             lblAirPressureVoltage.Text = mf.rc.airPressureVoltage.ToString("F2") + " V";
+            lblAirPressureHi.Text = mf.rc.airPressureHi.ToString("F0") + " PSI";
+            lblAirPressureLo.Text = mf.rc.airPressureLo.ToString("F0") + " PSI";
+            lblAirPressureDB.Text = mf.rc.airPressureDB.ToString("F0") + " PSI";
         }
 
         private void btnHeightTop_Click(object sender, EventArgs e)
@@ -138,6 +141,33 @@ namespace AOGPlanterV2
             if (numDownforceWeight3.Value > 0 && numDownforceWeight3.Value < 255)
             {
                 mf.udp.SendDownpressureConfig(weight: (byte)numDownforceWeight3.Value, setByte: 64);
+            }
+        }
+
+        private void btnSendAirPressLo_Click(object sender, EventArgs e)
+        {
+            if(numAirPressLo.Value > 4 &&  numAirPressLo.Value < (decimal)mf.rc.airPressureHi)
+            {
+                mf.rc.airPressureLo = (double)numAirPressLo.Value;
+                Properties.Settings.Default.setAirTargetLo = mf.rc.airPressureLo;
+            }
+        }
+
+        private void btnSendAirPressHi_Click(object sender, EventArgs e)
+        {
+            if (numAirPressHi.Value > (decimal)mf.rc.airPressureLo && numAirPressHi.Value < 80)
+            {
+                mf.rc.airPressureHi = (double)numAirPressHi.Value;
+                Properties.Settings.Default.setAirTargetHi = mf.rc.airPressureHi;
+            }
+        }
+
+        private void btnSendAirPressDB_Click(object sender, EventArgs e)
+        {
+            if (numAirPressDB.Value > 1 && numAirPressDB.Value < 15)
+            {
+                mf.rc.airPressureDB = (double)numAirPressDB.Value;
+                Properties.Settings.Default.setAirTargetDB = mf.rc.airPressureDB;
             }
         }
     }

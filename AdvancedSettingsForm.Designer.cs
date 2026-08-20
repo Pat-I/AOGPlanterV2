@@ -67,10 +67,25 @@
             btnAirPressureZero = new Button();
             lblAirPressureVoltage = new Label();
             label8 = new Label();
+            numAirPressHi = new NumericUpDown();
+            btnSendAirPressHi = new Button();
+            label7 = new Label();
+            numAirPressLo = new NumericUpDown();
+            btnSendAirPressLo = new Button();
+            label9 = new Label();
+            numAirPressDB = new NumericUpDown();
+            btnSendAirPressDB = new Button();
+            label10 = new Label();
+            lblAirPressureLo = new Label();
+            lblAirPressureHi = new Label();
+            lblAirPressureDB = new Label();
             ((System.ComponentModel.ISupportInitialize)numFertilizerWeight).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numDownforceWeight1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numDownforceWeight2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numDownforceWeight3).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numAirPressHi).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numAirPressLo).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numAirPressDB).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -430,11 +445,137 @@
             label8.TabIndex = 33;
             label8.Text = "Air Pressure";
             // 
+            // numAirPressHi
+            // 
+            numAirPressHi.Location = new Point(455, 173);
+            numAirPressHi.Maximum = new decimal(new int[] { 254, 0, 0, 0 });
+            numAirPressHi.Name = "numAirPressHi";
+            numAirPressHi.Size = new Size(75, 23);
+            numAirPressHi.TabIndex = 42;
+            numAirPressHi.Value = new decimal(new int[] { 40, 0, 0, 0 });
+            // 
+            // btnSendAirPressHi
+            // 
+            btnSendAirPressHi.Location = new Point(455, 223);
+            btnSendAirPressHi.Name = "btnSendAirPressHi";
+            btnSendAirPressHi.Size = new Size(75, 23);
+            btnSendAirPressHi.TabIndex = 41;
+            btnSendAirPressHi.Text = "Send";
+            btnSendAirPressHi.UseVisualStyleBackColor = true;
+            btnSendAirPressHi.Click += btnSendAirPressHi_Click;
+            // 
+            // label7
+            // 
+            label7.AutoSize = true;
+            label7.Location = new Point(455, 155);
+            label7.Name = "label7";
+            label7.Size = new Size(84, 15);
+            label7.TabIndex = 40;
+            label7.Text = "Air Pressure Hi";
+            // 
+            // numAirPressLo
+            // 
+            numAirPressLo.Location = new Point(333, 173);
+            numAirPressLo.Maximum = new decimal(new int[] { 254, 0, 0, 0 });
+            numAirPressLo.Name = "numAirPressLo";
+            numAirPressLo.Size = new Size(75, 23);
+            numAirPressLo.TabIndex = 39;
+            numAirPressLo.Value = new decimal(new int[] { 10, 0, 0, 0 });
+            // 
+            // btnSendAirPressLo
+            // 
+            btnSendAirPressLo.Location = new Point(333, 223);
+            btnSendAirPressLo.Name = "btnSendAirPressLo";
+            btnSendAirPressLo.Size = new Size(75, 23);
+            btnSendAirPressLo.TabIndex = 38;
+            btnSendAirPressLo.Text = "Send";
+            btnSendAirPressLo.UseVisualStyleBackColor = true;
+            btnSendAirPressLo.Click += btnSendAirPressLo_Click;
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(333, 155);
+            label9.Name = "label9";
+            label9.Size = new Size(85, 15);
+            label9.TabIndex = 37;
+            label9.Text = "Air pressure Lo";
+            // 
+            // numAirPressDB
+            // 
+            numAirPressDB.Location = new Point(575, 173);
+            numAirPressDB.Maximum = new decimal(new int[] { 254, 0, 0, 0 });
+            numAirPressDB.Name = "numAirPressDB";
+            numAirPressDB.Size = new Size(75, 23);
+            numAirPressDB.TabIndex = 45;
+            numAirPressDB.Value = new decimal(new int[] { 3, 0, 0, 0 });
+            // 
+            // btnSendAirPressDB
+            // 
+            btnSendAirPressDB.Location = new Point(575, 223);
+            btnSendAirPressDB.Name = "btnSendAirPressDB";
+            btnSendAirPressDB.Size = new Size(75, 23);
+            btnSendAirPressDB.TabIndex = 44;
+            btnSendAirPressDB.Text = "Send";
+            btnSendAirPressDB.UseVisualStyleBackColor = true;
+            btnSendAirPressDB.Click += btnSendAirPressDB_Click;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(575, 155);
+            label10.Name = "label10";
+            label10.Size = new Size(79, 15);
+            label10.TabIndex = 43;
+            label10.Text = "Air Deadband";
+            // 
+            // lblAirPressureLo
+            // 
+            lblAirPressureLo.AutoSize = true;
+            lblAirPressureLo.Location = new Point(346, 205);
+            lblAirPressureLo.Name = "lblAirPressureLo";
+            lblAirPressureLo.Size = new Size(46, 15);
+            lblAirPressureLo.TabIndex = 46;
+            lblAirPressureLo.Text = "---- PSI";
+            lblAirPressureLo.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblAirPressureHi
+            // 
+            lblAirPressureHi.AutoSize = true;
+            lblAirPressureHi.Location = new Point(471, 205);
+            lblAirPressureHi.Name = "lblAirPressureHi";
+            lblAirPressureHi.Size = new Size(46, 15);
+            lblAirPressureHi.TabIndex = 47;
+            lblAirPressureHi.Text = "---- PSI";
+            lblAirPressureHi.TextAlign = ContentAlignment.MiddleRight;
+            // 
+            // lblAirPressureDB
+            // 
+            lblAirPressureDB.AutoSize = true;
+            lblAirPressureDB.Location = new Point(588, 205);
+            lblAirPressureDB.Name = "lblAirPressureDB";
+            lblAirPressureDB.Size = new Size(46, 15);
+            lblAirPressureDB.TabIndex = 48;
+            lblAirPressureDB.Text = "---- PSI";
+            lblAirPressureDB.TextAlign = ContentAlignment.MiddleRight;
+            // 
             // AdvancedSettingsForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(684, 361);
+            Controls.Add(lblAirPressureDB);
+            Controls.Add(lblAirPressureHi);
+            Controls.Add(lblAirPressureLo);
+            Controls.Add(numAirPressDB);
+            Controls.Add(btnSendAirPressDB);
+            Controls.Add(label10);
+            Controls.Add(numAirPressHi);
+            Controls.Add(btnSendAirPressHi);
+            Controls.Add(label7);
+            Controls.Add(numAirPressLo);
+            Controls.Add(btnSendAirPressLo);
+            Controls.Add(label9);
             Controls.Add(btnAirPressureSet);
             Controls.Add(btnAirPressureZero);
             Controls.Add(lblAirPressureVoltage);
@@ -478,6 +619,9 @@
             ((System.ComponentModel.ISupportInitialize)numDownforceWeight1).EndInit();
             ((System.ComponentModel.ISupportInitialize)numDownforceWeight2).EndInit();
             ((System.ComponentModel.ISupportInitialize)numDownforceWeight3).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numAirPressHi).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numAirPressLo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numAirPressDB).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -522,5 +666,17 @@
         private Button btnAirPressureZero;
         private Label lblAirPressureVoltage;
         private Label label8;
+        private NumericUpDown numAirPressHi;
+        private Button btnSendAirPressHi;
+        private Label label7;
+        private NumericUpDown numAirPressLo;
+        private Button btnSendAirPressLo;
+        private Label label9;
+        private NumericUpDown numAirPressDB;
+        private Button btnSendAirPressDB;
+        private Label label10;
+        private Label lblAirPressureLo;
+        private Label lblAirPressureHi;
+        private Label lblAirPressureDB;
     }
 }

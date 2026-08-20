@@ -1551,13 +1551,37 @@ namespace AOGPlanterV2.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string setNext {
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public double setAirTargetLo {
             get {
-                return ((string)(this["setNext"]));
+                return ((double)(this["setAirTargetLo"]));
             }
             set {
-                this["setNext"] = value;
+                this["setAirTargetLo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("40")]
+        public double setAirTargetHi {
+            get {
+                return ((double)(this["setAirTargetHi"]));
+            }
+            set {
+                this["setAirTargetHi"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("3")]
+        public double setAirTargetDB {
+            get {
+                return ((double)(this["setAirTargetDB"]));
+            }
+            set {
+                this["setAirTargetDB"] = value;
             }
         }
     }

@@ -77,6 +77,8 @@ namespace AOGPlanterV2
             //rc.InitSectionState();
             FlowLayoutPanel1_Center();
 
+            RetrievePlanterParrameters();
+
         }
 
         private void FlowLayoutPanel1_Center()
@@ -85,7 +87,7 @@ namespace AOGPlanterV2
             int x = (this.ClientSize.Width - flowLayoutPanel1.Width) / 2;
 
             // Set Y based on a fixed distance from the bottom
-            int distanceFromBottom = 100;
+            int distanceFromBottom = 65;
             int y = this.ClientSize.Height - flowLayoutPanel1.Height - distanceFromBottom;
 
             flowLayoutPanel1.Location = new Point(x, y);
@@ -278,7 +280,7 @@ namespace AOGPlanterV2
                 lblDisconnected.Visible = false;
             }
 
-            lblDwPressure.Text = rc.airPressurePSI.ToString("F0") + " PSI";
+            lblDwPressure.Text = rc.airPressurePSIaveraged.ToString("F1") + " PSI";
             lblFertilizerWeight.Text = rc.fertilizerWeight.ToString("F0") + " Kg";
             lblVaccum1.Text = rc.vaccum1inWC.ToString("F1") + " in.wg";
             lblVaccum2.Text = rc.vaccum2inWC.ToString("F1") + " in.wg";
@@ -295,16 +297,237 @@ namespace AOGPlanterV2
             }
 
             //do the backcolor for the pressure arrows
-            
 
-                
+            // Check Bit 0 (Raise)
+            rc.isAutoPressure = cbxAutoAirPressure.Checked;
+            cbxAutoAirPressure.BackColor = rc.isAutoPressure ? Color.LimeGreen : Color.LightGray;
+
             // Check Bit 0 (Raise)
             bool isRaiseActive = (rc.receivingDownpressureStatus & (1 << 0)) != 0;
-            btnPressureUp.BackColor = isRaiseActive ? Color.LimeGreen : Color.LightGray;
+            if (!isRaiseActive && !rc.isPressureRaising)
+            {
+                // Both are false
+                btnPressureUp.BackColor = Color.LightGray;
+            }
+            else if (isRaiseActive && rc.isPressureRaising)
+            {
+                // Both are true
+                btnPressureUp.BackColor = Color.LimeGreen;
+            }
+            else
+            {
+                // Exactly one is true (exclusive OR condition)
+                btnPressureUp.BackColor = Color.Yellow;
+            }
 
             // Check Bit 1 (Lower)
             bool isLowerActive = (rc.receivingDownpressureStatus & (1 << 1)) != 0;
-            btnPressureDown.BackColor = isLowerActive ? Color.IndianRed : Color.LightGray;
+            if (!isLowerActive && !rc.isPressureLowering)
+            {
+                // Both are false
+                btnPressureDown.BackColor = Color.LightGray;
+            }
+            else if (isLowerActive && rc.isPressureLowering)
+            {
+                // Both are true
+                btnPressureDown.BackColor = Color.LimeGreen;
+            }
+            else
+            {
+                // Exactly one is true (exclusive OR condition)
+                btnPressureDown.BackColor = Color.Yellow;
+            }
+
+            UpdateAirPressure();
+        }
+
+        public void UpdateAirPressure()
+        {
+            if (rc.airSolenoidDebonceTimer > 0)
+            {
+                rc.airSolenoidDebonceTimer--;
+            }
+
+            if (rc.airSolenoidFeedbackTimer > 0)
+            {
+                rc.airSolenoidFeedbackTimer--;
+            }
+
+            if(rc.airSolenoidFeedbackTimer <= 1)
+            {
+                if (rc.isPressureRaising)
+                {
+                    if((rc.receivingDownpressureStatus & (1 << 0)) == 0)
+                    {
+                        //valve is no more active
+                        rc.isPressureRaising = false;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                }
+                if (rc.isPressureLowering)
+                {
+                    if ((rc.receivingDownpressureStatus & (1 << 1)) == 0)
+                    {
+                        //valve is no more active
+                        rc.isPressureLowering = false;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                }
+            }
+
+            if (rc.isAutoPressure)
+            {
+                if (rc.isPressureRaisePressed)
+                {
+                    rc.isPressureRaisePressed = false;
+                    rc.isHighTargetUsed = true;
+                    UpdateCbxAutoAirPressureVisual();
+                }
+
+                if (rc.isPressureLowerPressed)
+                {
+                    rc.isPressureLowerPressed = false;
+                    rc.isHighTargetUsed = false;
+                    UpdateCbxAutoAirPressureVisual();
+                }
+            }
+            else
+            {
+                if (rc.isPressureLowerPressed)
+                {
+                    rc.isPressureRaisePressed = false;
+                    rc.isPressureLowerPressed = false;
+
+                    if (rc.isPressureLowering)
+                    {
+                        rc.isPressureLowering = false;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                    else if (rc.isPressureRaising)
+                    {
+                        rc.isPressureRaising = false;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                    else
+                    {
+                        rc.airSolenoidFeedbackTimer = 16;
+                        rc.isPressureLowering = true;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                }
+                else if (rc.isPressureRaisePressed)
+                {
+                    rc.isPressureRaisePressed = false;
+                    if (rc.isPressureLowering)
+                    {
+                        rc.isPressureLowering = false;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                    else if (rc.isPressureRaising)
+                    {
+                        rc.isPressureRaising = false;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                    else
+                    {
+                        rc.airSolenoidFeedbackTimer = 16;
+                        rc.isPressureRaising = true;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                }
+            }
+
+            if (rc.airSolenoidDebonceTimer <= 1)
+            {
+                if (rc.isAutoPressure)
+                {
+                    if (rc.planterHeight < rc.planterOnThreashold)
+                    {
+                        //lowered, auto active
+                        AirPressureValveAutoControl();
+                    }
+                    else if(rc.isPressureRaising || rc.isPressureLowering)
+                    {
+                        rc.isPressureRaising = false;
+                        rc.isPressureLowering = false;
+                        rc.UpdateDownforceStatus();
+                        udp.SendDownpressureConfig();
+                    }
+                }
+            }
+            // safety
+            if ((rc.airPressurePSIaveraged > (rc.airPressureHi + rc.airPressureDB)) && rc.isPressureRaising)
+            {
+                rc.isPressureRaising = false;
+                rc.UpdateDownforceStatus();
+                udp.SendDownpressureConfig();
+            }
+
+        }
+
+        public void AirPressureValveAutoControl()
+        {
+            double targetPressure = 0;
+            if (rc.isHighTargetUsed)
+            {
+                targetPressure = rc.airPressureHi;
+            }
+            else
+            {
+                targetPressure = rc.airPressureLo;
+            }
+
+            if (rc.isPressureRaising)
+            {
+                if (rc.airPressurePSIaveraged > (targetPressure - rc.airPressureDBdiv4))
+                {
+                    //stop the valve
+                    rc.isPressureRaising = false;
+                    rc.UpdateDownforceStatus();
+                    udp.SendDownpressureConfig();
+                    rc.airSolenoidDebonceTimer = 8;
+                }
+            }
+            else if (rc.isPressureLowering)
+            {
+                if (rc.airPressurePSIaveraged < (targetPressure + rc.airPressureDBdiv4) || rc.airPressurePSIaveraged < 3)
+                {
+                    //stop the valve
+                    rc.isPressureLowering = false;
+                    rc.UpdateDownforceStatus();
+                    udp.SendDownpressureConfig();
+                    rc.airSolenoidDebonceTimer = 8;
+                }
+            }
+            else
+            {
+                if (rc.airPressurePSIaveraged < (targetPressure - rc.airPressureDBdiv2))
+                {
+                    //activate the raising valve
+                    rc.airSolenoidFeedbackTimer = 16;
+                    rc.isPressureRaising = true;
+                    rc.UpdateDownforceStatus();
+                    udp.SendDownpressureConfig();
+                    rc.airSolenoidDebonceTimer = 10;
+                }
+                else if (rc.airPressurePSIaveraged > (targetPressure + rc.airPressureDBdiv2))
+                {
+                    //activate the lowering valve
+                    rc.airSolenoidFeedbackTimer = 16;
+                    rc.isPressureLowering = true;
+                    rc.UpdateDownforceStatus();
+                    udp.SendDownpressureConfig();
+                    rc.airSolenoidDebonceTimer = 10;
+                }
+            }
         }
 
         private void UpdateMultiByteColors(byte forcedByte, byte setByte, byte actualByte)
@@ -343,6 +566,14 @@ namespace AOGPlanterV2
             }
         }
 
+        private void RetrievePlanterParrameters()
+        {
+            rc.airPressureDB = Properties.Settings.Default.setAirTargetDB;
+            rc.airPressureHi = Properties.Settings.Default.setAirTargetHi;
+            rc.airPressureLo = Properties.Settings.Default.setAirTargetLo;
+            rc.airPressureDBdiv2 = rc.airPressureDB / 2;
+            rc.airPressureDBdiv4 = rc.airPressureDB / 4;
+        }
         private void TimerSim_Elapsed(object sender, ElapsedEventArgs e)
         {
             // Run background updates here
@@ -384,46 +615,38 @@ namespace AOGPlanterV2
             udp.SendFertilizerConfig(force: forceByte);
         }
 
-        private void btnPressureUp_MouseDown(object sender, MouseEventArgs e)
+        private void btnPressureUp_Click(object sender, EventArgs e)
         {
             rc.isPressureRaisePressed = true;
-            rc.UpdateDownforceStatus();
-            udp.SendDownpressureConfig();
         }
 
-        private void btnPressureUp_MouseUp(object sender, MouseEventArgs e)
-        {
-            rc.isPressureRaisePressed = false;
-            rc.UpdateDownforceStatus();
-            udp.SendDownpressureConfig();
-        }
-
-        private void btnPressureUp_MouseLeave(object sender, EventArgs e)
-        {
-            rc.isPressureRaisePressed = false;
-            rc.UpdateDownforceStatus();
-            udp.SendDownpressureConfig();
-        }
-
-        private void btnPressureDown_MouseDown(object sender, MouseEventArgs e)
+        private void btnPressureDown_Click(object sender, EventArgs e)
         {
             rc.isPressureLowerPressed = true;
-            rc.UpdateDownforceStatus();
-            udp.SendDownpressureConfig();
         }
 
-        private void btnPressureDown_MouseUp(object sender, MouseEventArgs e)
+        private void cbxAutoAirPressure_CheckedChanged(object sender, EventArgs e)
         {
-            rc.isPressureLowerPressed = false;
-            rc.UpdateDownforceStatus();
-            udp.SendDownpressureConfig();
+            UpdateCbxAutoAirPressureVisual();
         }
 
-        private void btnPressureDown_MouseLeave(object sender, EventArgs e)
+        private void UpdateCbxAutoAirPressureVisual()
         {
-            rc.isPressureLowerPressed = false;
-            rc.UpdateDownforceStatus();
-            udp.SendDownpressureConfig();
+            if (cbxAutoAirPressure.Checked)
+            {
+                if (rc.isHighTargetUsed)
+                {
+                    cbxAutoAirPressure.Text = "AUTO " + rc.airPressureHi.ToString("F0") + " PSI";
+                }
+                else
+                {
+                    cbxAutoAirPressure.Text = "AUTO " + rc.airPressureLo.ToString("F0") + " PSI";
+                }
+            }
+            else
+            {
+                cbxAutoAirPressure.Text = "AUTO -- PSI";
+            }
         }
     }
 }

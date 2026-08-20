@@ -45,7 +45,8 @@ namespace AOGPlanterV2.OF
         public byte planterOffThreashold = 0;
         public double vaccum1inWC = 0;
         public double vaccum2inWC = 0;
-        public short airPressurePSI = 0;
+        public double airPressurePSIaveraged = 0;
+        public double airPressurePSI = 0;
 
         public short downforceKgSensor1 = 0;
         public short downforceKgSensor2 = 0;
@@ -55,11 +56,23 @@ namespace AOGPlanterV2.OF
         public byte DownpressureStatusToSend = 0;
 
         // Status
-        public bool isPressureRaisePressed = false;
+        public bool isPressureRaisePressed = false; //the button
         public bool isPressureLowerPressed = false;
+        public bool isPressureRaising = false;
+        public bool isPressureLowering = false;
         public bool isAutoWeight = false;
         public bool isAutoPressure = false;
-        public bool isMainTargetUsed = false;
+        public bool isHighTargetUsed = false;
+
+        //airPressure Control (temporary fix)
+        public double airPressureLo = 0;
+        public double airPressureHi = 0;
+        public double airPressureDB = 0;
+        public double airPressureDBdiv2 = 0;
+        public double airPressureDBdiv4 = 0;
+        public int airSolenoidDebonceTimer = 0;
+        public int airSolenoidFeedbackTimer = 0;
+
 
         public int fbNumSections = 0;
         public float fbRowWidth = 0.0f;
@@ -80,11 +93,11 @@ namespace AOGPlanterV2.OF
         public void UpdateDownforceStatus()
         {
             DownpressureStatusToSend = (byte)(
-                (isPressureRaisePressed ? 1 : 0) << 0 |
-                (isPressureLowerPressed ? 1 : 0) << 1 |
+                (isPressureRaising ? 1 : 0) << 0 |
+                (isPressureLowering ? 1 : 0) << 1 |
                 (isAutoWeight ? 1 : 0) << 4 |
                 (isAutoPressure ? 1 : 0) << 5 |
-                (isMainTargetUsed ? 1 : 0) << 6);
+                (isHighTargetUsed ? 1 : 0) << 6);
         }
 
         /*

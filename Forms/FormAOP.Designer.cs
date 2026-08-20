@@ -60,6 +60,7 @@
             lblDownforce3 = new Label();
             btnPressureUp = new Button();
             btnPressureDown = new Button();
+            cbxAutoAirPressure = new CheckBox();
             flowLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -244,7 +245,7 @@
             flowLayoutPanel1.Controls.Add(btnFertilizer6);
             flowLayoutPanel1.Controls.Add(btnFertilizer7);
             flowLayoutPanel1.Controls.Add(btnFertilizer8);
-            flowLayoutPanel1.Location = new Point(100, 900);
+            flowLayoutPanel1.Location = new Point(100, 935);
             flowLayoutPanel1.Name = "flowLayoutPanel1";
             flowLayoutPanel1.Size = new Size(848, 29);
             flowLayoutPanel1.TabIndex = 138;
@@ -441,9 +442,7 @@
             btnPressureUp.Text = "Air Pressure";
             btnPressureUp.TextAlign = ContentAlignment.BottomCenter;
             btnPressureUp.UseVisualStyleBackColor = true;
-            btnPressureUp.MouseDown += btnPressureUp_MouseDown;
-            btnPressureUp.MouseLeave += btnPressureUp_MouseLeave;
-            btnPressureUp.MouseUp += btnPressureUp_MouseUp;
+            btnPressureUp.Click += btnPressureUp_Click;
             // 
             // btnPressureDown
             // 
@@ -455,9 +454,19 @@
             btnPressureDown.Text = "Air Pressure";
             btnPressureDown.TextAlign = ContentAlignment.TopCenter;
             btnPressureDown.UseVisualStyleBackColor = true;
-            btnPressureDown.MouseDown += btnPressureDown_MouseDown;
-            btnPressureDown.MouseLeave += btnPressureDown_MouseLeave;
-            btnPressureDown.MouseUp += btnPressureDown_MouseUp;
+            btnPressureDown.Click += btnPressureDown_Click;
+            // 
+            // cbxAutoAirPressure
+            // 
+            cbxAutoAirPressure.Appearance = Appearance.Button;
+            cbxAutoAirPressure.AutoSize = true;
+            cbxAutoAirPressure.Location = new Point(463, 70);
+            cbxAutoAirPressure.Name = "cbxAutoAirPressure";
+            cbxAutoAirPressure.Size = new Size(79, 23);
+            cbxAutoAirPressure.TabIndex = 148;
+            cbxAutoAirPressure.Text = "Auto -- PSI";
+            cbxAutoAirPressure.UseVisualStyleBackColor = true;
+            cbxAutoAirPressure.CheckedChanged += cbxAutoAirPressure_CheckedChanged;
             // 
             // FormAOP
             // 
@@ -465,6 +474,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(1920, 1061);
+            Controls.Add(cbxAutoAirPressure);
             Controls.Add(btnPressureDown);
             Controls.Add(btnPressureUp);
             Controls.Add(lblDownforce3);
@@ -534,5 +544,6 @@
         private Label lblDownforce3;
         private Button btnPressureUp;
         private Button btnPressureDown;
+        private CheckBox cbxAutoAirPressure;
     }
 }
